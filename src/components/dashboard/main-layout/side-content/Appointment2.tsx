@@ -4,9 +4,10 @@ import React from "react";
 
 type Props = {
     bgColor: string;
+    avatar: string;
 };
 
-const Appointment2 = ({ bgColor }: Props) => {
+const Appointment2 = ({ bgColor, avatar }: Props) => {
     return (
         <div
             className={
@@ -14,7 +15,7 @@ const Appointment2 = ({ bgColor }: Props) => {
                 bgColor
             }>
             <Image
-                src="/avatar-1.jpg"
+                src={avatar}
                 alt="user-avatar"
                 width={50}
                 height={50}

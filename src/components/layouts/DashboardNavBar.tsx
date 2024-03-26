@@ -16,7 +16,7 @@ type Props = {};
 const DashboardNavBar = (props: Props) => {
     const [open, setOpen] = React.useState<boolean>(false);
     return (
-        <div className="flex items-center p-4 w-full bg-white text-slate-800 shadow-md dark:bg-slate-800 dark:text-white max-h-[5%]">
+        <div className="flex items-center p-4 w-full bg-white text-slate-800 border-b dark:bg-slate-800 dark:text-white max-h-[5%]">
             <div className="relative flex items-center justify-between w-full">
                 <div className="flex w-full max-w-full justify-between relative">
                     <h1 className="max-w-60 font-semibold">Dashboard</h1>

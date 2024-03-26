@@ -75,19 +75,24 @@
   }
 }
 
-tbody tr:nth-child(even) {
+/* tbody tr:nth-child(even) {
   background-color: #f1f5f9;
 }
 
 tbody tr:nth-child(odd) {
   background-color: #ffffff;
-}
+} */
 
-tbody td {
+/* tbody td {
   padding: 12px 12px;
   font-size: small;
 }
 
 tbody tr:hover {
   background-color: #f1f5f9;
+} */
+
+.hero-height {
+  height: 264px!important;
+  min-height: 264px!important;
 }
