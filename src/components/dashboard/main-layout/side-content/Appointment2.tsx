@@ -5,9 +5,10 @@ import React from "react";
 type Props = {
     bgColor: string;
     avatar: string;
+    name: string;
 };
 
-const Appointment2 = ({ bgColor, avatar }: Props) => {
+const Appointment2 = ({ bgColor, avatar, name }: Props) => {
     return (
         <div
             className={
@@ -19,10 +20,10 @@ const Appointment2 = ({ bgColor, avatar }: Props) => {
                 alt="user-avatar"
                 width={50}
                 height={50}
-                className="rounded-full"
+                className="rounded-full w-[50px] h-[50px]"
             />
             <div>
-                <h1 className="text-sm font-semibold">Dennis Iowa</h1>
+                <h1 className="text-sm font-semibold">{name}</h1>
                 <p className="text-xs font-light">10:00 am - 11:00 am</p>
             </div>
             <div className="ms-auto">

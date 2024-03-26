@@ -62,13 +62,13 @@ const DashboardNavBar = (props: Props) => {
                     />
                     <div className="flex gap-2 items-center">
                         <Image
-                            src="/avatar-1.jpg"
+                            src="/avatar-2.jpg"
                             className="rounded-full"
                             alt="user-avatar"
                             width={30}
                             height={30}
                         />
-                        <h4>John Doe</h4>
+                        <h4>Bimbo Oshin</h4>
                         <div className="w-4 h-4">
                             <ChevronDown
                                 className="text-slate-500"

@@ -22,10 +22,26 @@ const UpcomingAppointmentsCard = (props: Props) => {
             {/* <Appointment />
             <Appointment /> */}
 
-            <Appointment2 avatar="/avatar-1.jpg" bgColor="bg-blue-100" />
-            <Appointment2 avatar="/avatar-2.jpg" bgColor="bg-yellow-100" />
-            <Appointment2 avatar="/avatar-1.jpg" bgColor="bg-red-100" />
-            <Appointment2 avatar="/avatar-2.jpg" bgColor="bg-green-100" />
+            <Appointment2
+                name="Dele Akin"
+                avatar="/avatar-1.jpg"
+                bgColor="bg-blue-100"
+            />
+            <Appointment2
+                name="Ngozi Afang"
+                avatar="/avatar-2.jpg"
+                bgColor="bg-yellow-100"
+            />
+            <Appointment2
+                name="Onusi Sultan"
+                avatar="/avatar-4.jpeg"
+                bgColor="bg-red-100"
+            />
+            <Appointment2
+                name="Yosi Osibs"
+                avatar="/avatar-3.jpeg"
+                bgColor="bg-green-100"
+            />
 
             <Button
                 className="w-full bg-slate-200 text-purple-500"

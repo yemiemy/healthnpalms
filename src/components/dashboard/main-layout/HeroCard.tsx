@@ -10,7 +10,7 @@ const HeroCard = (props: Props) => {
                 <div className="">
                     <h4 className="text-sm lg:text-base">Welcome back,</h4>
                     <h1 className="text-xl lg:text-3xl font-bold my-2">
-                        Dr. Jessica Linda
+                        Dr. Bimbo Oshin
                     </h1>
                     <h4 className="text-sm lg:text-base">
                         MD, DM (Cardiology), FACC, FESC
