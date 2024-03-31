@@ -1,4 +1,5 @@
 "use client";
+import { User } from "@/lib/models/accounts/models";
 import {
     BellIcon,
     ChevronDown,
@@ -11,9 +12,11 @@ import {
 import Image from "next/image";
 import React from "react";
 
-type Props = {};
+type Props = {
+    user: User | undefined;
+};
 
-const DashboardNavBar = (props: Props) => {
+const DashboardNavBar = ({ user }: Props) => {
     const [open, setOpen] = React.useState<boolean>(false);
     return (
         <div className="flex items-center p-4 w-full bg-white text-slate-800 border-b dark:bg-slate-800 dark:text-white max-h-[5%]">
@@ -68,7 +71,7 @@ const DashboardNavBar = (props: Props) => {
                             width={30}
                             height={30}
                         />
-                        <h4>Bimbo Oshin</h4>
+                        <h4>{user?.first_name + " " + user?.last_name}</h4>
                         <div className="w-4 h-4">
                             <ChevronDown
                                 className="text-slate-500"

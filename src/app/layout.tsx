@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Lato } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import { Toaster } from "@/components/ui/sonner";
 
 const lato = Lato({
     subsets: ["latin"],
@@ -31,6 +32,7 @@ export default function RootLayout({
                 )}
                 suppressHydrationWarning={true}>
                 {children}
+                <Toaster richColors position="top-center" />
             </body>
         </html>
     );
