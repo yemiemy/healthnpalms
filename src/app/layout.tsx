@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Lato } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
@@ -18,6 +18,13 @@ export const metadata: Metadata = {
         "Experience wellness at your fingertips with HealthInHands, revolutionizing healthcare accessibility using technology solutions.",
 };
 
+export const viewport: Viewport = {
+    themeColor: [
+        { media: "(prefers-color-scheme: light)", color: "white" },
+        { media: "(prefers-color-scheme: dark)", color: "black" },
+    ],
+};
+
 export default function RootLayout({
     children,
 }: Readonly<{
@@ -27,7 +34,7 @@ export default function RootLayout({
         <html lang="en">
             <body
                 className={cn(
-                    "min-h-screen bg-background font-sans antialiased",
+                    "min-h-screen font-sans antialiased",
                     lato.variable
                 )}
                 suppressHydrationWarning={true}>

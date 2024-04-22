@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import axios from "@/lib/api";
 import { Loader } from "lucide-react";
-import Link from "next/link";
 import React from "react";
 import { toast } from "sonner";
 import Cookies from "js-cookie";

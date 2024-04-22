@@ -79,7 +79,7 @@ const Page = (props: Props) => {
                 <div className="text-sm mb-1">
                     <span>Don&apos;t have an account? </span>
                     <Link
-                        href="/signup"
+                        href="/account/signup"
                         className="hover:underline text-primary"
                         replace>
                         Create Account

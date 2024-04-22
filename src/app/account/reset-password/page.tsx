@@ -60,7 +60,7 @@ const Page = (props: Props) => {
             );
             toast.success("Password reset successful!");
 
-            router.push("/login");
+            router.push("/account/login");
         } catch (err: any) {
             console.log(err);
             if (!err.response) {

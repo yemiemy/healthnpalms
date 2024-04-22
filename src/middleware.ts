@@ -7,8 +7,8 @@ export function middleware(request: NextRequest) {
     const originalUrl = request.url;
     if (
         currentUser &&
-        (request.nextUrl.pathname.startsWith("/signup") ||
-            request.nextUrl.pathname.startsWith("/login") ||
+        (request.nextUrl.pathname.startsWith("/account/signup") ||
+            request.nextUrl.pathname.startsWith("/account/login") ||
             request.nextUrl.pathname.startsWith("/account/forgot-password") ||
             request.nextUrl.pathname.startsWith("/account/reset-password") ||
             request.nextUrl.pathname.startsWith("/account/verify"))
@@ -18,8 +18,8 @@ export function middleware(request: NextRequest) {
 
     if (
         !currentUser &&
-        (request.nextUrl.pathname.startsWith("/login") ||
-            request.nextUrl.pathname.startsWith("/signup") ||
+        (request.nextUrl.pathname.startsWith("/account/login") ||
+            request.nextUrl.pathname.startsWith("/account/signup") ||
             request.nextUrl.pathname.startsWith("/account/forgot-password") ||
             request.nextUrl.pathname.startsWith("/account/reset-password") ||
             request.nextUrl.pathname.startsWith("/account/verify"))
@@ -30,10 +30,10 @@ export function middleware(request: NextRequest) {
     // Check if user is not logged in and redirect to login
     if (
         !currentUser ||
-        (!currentUser && !request.nextUrl.pathname.startsWith("/login"))
+        (!currentUser && !request.nextUrl.pathname.startsWith("/account/login"))
     ) {
         return Response.redirect(
-            new URL("/login?next=" + originalUrl, request.url)
+            new URL("/account/login?next=" + originalUrl, request.url)
         );
     }
 }

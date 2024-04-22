@@ -33,7 +33,7 @@ const Dashboard = (props: Props) => {
     React.useEffect(() => {
         if (!token) {
             toast.error("Please login to continue.");
-            router.push("/login");
+            router.push("/account/login");
         }
     }, [token, router]);
 
@@ -41,8 +41,8 @@ const Dashboard = (props: Props) => {
         getUser();
     }, [getUser]);
     return (
-        <div className="flex">
-            <SideBar />
+        <div className="flex overflow-hidden">
+            <SideBar isDashboardActive={true} />
             <Main user={user} />
         </div>
     );

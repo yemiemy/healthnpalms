@@ -6,7 +6,7 @@ type Props = {};
 
 const DashboardMainLayout = (props: Props) => {
     return (
-        <div className="p-8 flex md:flex-row flex-col gap-8 w-full max-h-[95%] overflow-auto">
+        <div className="p-8 flex md:flex-row flex-col gap-8 w-full">
             <MainContent />
             <SideContent />
         </div>

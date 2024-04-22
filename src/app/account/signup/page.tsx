@@ -108,7 +108,7 @@ const Page = () => {
                 <div className="text-sm mb-1">
                     <span>Already have an account? </span>
                     <Link
-                        href="/login"
+                        href="/account/login"
                         className="hover:underline text-primary"
                         replace>
                         Sign In

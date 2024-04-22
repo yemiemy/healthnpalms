@@ -1,4 +1,5 @@
 "use client";
+import { cn } from "@/lib/utils";
 import {
     CalendarDaysIcon,
     ChevronLeftIcon,
@@ -12,13 +13,18 @@ import {
 import Link from "next/link";
 import React from "react";
 
-type Props = {};
+type Props = {
+    isDashboardActive?: boolean;
+    isPatientsActive?: boolean;
+    isAppointmentsActive?: boolean;
+    isSettingsActive?: boolean;
+};
 
 const SideBar = (props: Props) => {
     const [collapsed, setCollapsed] = React.useState<boolean>(true);
     return collapsed ? (
         <div className="bg-green-100 max-w-[10%] min-h-screen max-h-screen break-words hidden md:flex md:flex-col">
-            <div className="mt-2 mb-8 p-4 pt-2 pb-4 relative">
+            <div className="relative p-4">
                 <StethoscopeIcon
                     className="bg-green-500 p-1 rounded-md"
                     width={30}
@@ -26,7 +32,7 @@ const SideBar = (props: Props) => {
                     color="white"
                 />
                 <div
-                    className="top-[34%] left-[89%] absolute cursor-pointer"
+                    className="top-[37.5%] left-[87%] absolute cursor-pointer bg-white border rounded-full"
                     onClick={() => setCollapsed(!collapsed)}>
                     <ChevronRightIcon
                         className="border rounded-full text-slate-500 cursor-pointer"
@@ -38,28 +44,46 @@ const SideBar = (props: Props) => {
             </div>
             <Link
                 href="/"
-                className="mb-2 px-4 bg-white py-2 border-l-2 border-green-500 flex justify-center relative">
+                className={cn("my-4 px-4 flex justify-center relative", {
+                    "bg-white py-2 border-l-2 border-green-500":
+                        props.isDashboardActive,
+                })}>
                 <LayoutGridIcon
                     className="hover:text-green-500 text-slate-500"
                     width={15}
                     height={15}
                 />
             </Link>
-            <Link href="/" className="my-4 px-4 flex justify-center">
+            <Link
+                href="/patients"
+                className={cn("my-4 px-4 flex justify-center relative", {
+                    "bg-white py-2 border-l-2 border-green-500":
+                        props.isPatientsActive,
+                })}>
                 <UserIcon
                     className="hover:text-green-500 text-slate-500"
                     width={15}
                     height={15}
                 />
             </Link>
-            <Link href="/" className="my-4 px-4 flex justify-center">
+            <Link
+                href="/"
+                className={cn("my-4 px-4 flex justify-center relative", {
+                    "bg-white py-2 border-l-2 border-green-500":
+                        props.isAppointmentsActive,
+                })}>
                 <CalendarDaysIcon
                     className="hover:text-green-500 text-slate-500"
                     width={15}
                     height={15}
                 />
             </Link>
-            <Link href="/" className="my-4 px-4 flex justify-center">
+            <Link
+                href="/account/settings"
+                className={cn("my-4 px-4 flex justify-center relative", {
+                    "bg-white py-2 border-l-2 border-green-500":
+                        props.isSettingsActive,
+                })}>
                 <SettingsIcon
                     className="hover:text-green-500 text-slate-500"
                     width={15}
@@ -69,16 +93,16 @@ const SideBar = (props: Props) => {
         </div>
     ) : (
         <div className="bg-green-100 max-w-[20%] min-h-screen max-h-screen break-words hidden md:flex md:flex-col">
-            <div className="mt-2 mb-8 p-4 relative flex items-center gap-1">
+            <div className="relative p-4 flex items-center gap-1">
                 <StethoscopeIcon
                     className="bg-green-500 p-1 rounded-md"
-                    width={20}
-                    height={20}
+                    width={30}
+                    height={30}
                     color="white"
                 />{" "}
-                <h1 className="text-sm font-semibold">HealthNPalms</h1>
+                <h1 className="font-semibold">HealthInPalms</h1>
                 <div
-                    className="top-[37%] left-[94%] absolute cursor-pointer"
+                    className="top-[37.5%] left-[95%] absolute cursor-pointer bg-white border rounded-full"
                     onClick={() => setCollapsed(!collapsed)}>
                     <ChevronLeftIcon
                         className="border rounded-full text-slate-500 cursor-pointer"
@@ -90,7 +114,13 @@ const SideBar = (props: Props) => {
             </div>
             <Link
                 href="/"
-                className="mb-2 px-4 border-l-2 border-green-500 bg-white py-2 flex items-center hover:text-green-500 text-sm text-slate-500 ">
+                className={cn(
+                    "my-4 px-4 flex items-center text-sm text-slate-500 hover:text-green-500",
+                    {
+                        "border-l-2 border-green-500 bg-white py-2":
+                            props.isDashboardActive,
+                    }
+                )}>
                 <LayoutGridIcon
                     className="hover:text-green-500 text-slate-500 mr-1"
                     width={15}
@@ -101,7 +131,13 @@ const SideBar = (props: Props) => {
 
             <Link
                 href="/"
-                className="my-4 px-4 flex items-center text-sm text-slate-500 hover:text-green-500">
+                className={cn(
+                    "my-4 px-4 flex items-center text-sm text-slate-500 hover:text-green-500",
+                    {
+                        "border-l-2 border-green-500 bg-white py-2":
+                            props.isPatientsActive,
+                    }
+                )}>
                 <UserIcon
                     className="hover:text-green-500 text-slate-500 mr-1"
                     width={15}
@@ -112,7 +148,13 @@ const SideBar = (props: Props) => {
 
             <Link
                 href="/"
-                className="my-4 px-4 flex items-center text-sm text-slate-500 hover:text-green-500">
+                className={cn(
+                    "my-4 px-4 flex items-center text-sm text-slate-500 hover:text-green-500",
+                    {
+                        "border-l-2 border-green-500 bg-white py-2":
+                            props.isAppointmentsActive,
+                    }
+                )}>
                 <CalendarDaysIcon
                     className="hover:text-green-500 text-slate-500 mr-1"
                     width={15}
@@ -122,8 +164,14 @@ const SideBar = (props: Props) => {
             </Link>
 
             <Link
-                href="/"
-                className="my-4 px-4 flex items-center text-sm text-slate-500 hover:text-green-500">
+                href="/account/settings"
+                className={cn(
+                    "my-4 px-4 flex items-center text-sm text-slate-500 hover:text-green-500",
+                    {
+                        "border-l-2 border-green-500 bg-white py-2":
+                            props.isSettingsActive,
+                    }
+                )}>
                 <SettingsIcon
                     className="hover:text-green-500 text-slate-500 mr-1"
                     width={15}

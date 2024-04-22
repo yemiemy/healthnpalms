@@ -34,7 +34,7 @@ const Page = (props: Props) => {
             toast.error(
                 "Please login to your account before retrying verification."
             );
-            router.replace("/login");
+            router.replace("/account/login");
         }
     }, [email, router]);
 
@@ -52,8 +52,7 @@ const Page = (props: Props) => {
             );
             toast.success("Account verification successful!");
 
-            //Redirect user back to the original URL if available
-            router.push("/login");
+            router.push("/account/login");
         } catch (err: any) {
             console.log(err);
             if (!err.response) {
