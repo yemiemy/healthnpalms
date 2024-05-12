@@ -28,7 +28,7 @@ const Page = (props: Props) => {
 
     React.useEffect(() => {
         if (Cookies.get("__token")) {
-            if (Cookies.get("user_type")) {
+            if (Cookies.get("is_staff") === "true") {
                 router.replace("/staff/");
             } else {
                 router.replace("/");
@@ -49,10 +49,17 @@ const Page = (props: Props) => {
             );
             const data = await response.data;
 
+            const res = await axios.get("/accounts/details/", {
+                headers: {
+                    Authorization: `Token ${data.access}`,
+                },
+            });
+
+            const user_data = await res.data;
             Cookies.set("__token", data.access, {
                 expires: 1,
             });
-            Cookies.set("user_type", data.access, {
+            Cookies.set("is_staff", user_data.is_staff, {
                 expires: 1,
             });
             toast.success("Welcome back!");

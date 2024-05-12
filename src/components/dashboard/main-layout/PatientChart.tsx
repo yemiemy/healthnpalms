@@ -115,7 +115,7 @@ const PatientChart = (props: Props) => {
                 ticks: {
                     font: {
                         size: 12,
-                        weight: "bold",
+                        weight: "700",
                     },
                 },
                 title: {
@@ -126,7 +126,6 @@ const PatientChart = (props: Props) => {
                     },
                     font: {
                         size: 15,
-                        style: "bold",
                         family: "Verdana",
                     },
                 },
@@ -136,7 +135,7 @@ const PatientChart = (props: Props) => {
                 ticks: {
                     font: {
                         size: 12,
-                        weight: "bold",
+                        weight: "700",
                     },
                 },
                 title: {
@@ -147,7 +146,6 @@ const PatientChart = (props: Props) => {
                     },
                     font: {
                         size: 15,
-                        style: "bold",
                         family: "Verdana",
                     },
                 },

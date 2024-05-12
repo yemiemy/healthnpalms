@@ -3,7 +3,7 @@ import type { NextRequest } from "next/server";
 export function middleware(request: NextRequest) {
     const currentUser = request.cookies.get("__token")?.value;
 
-    const is_medical_professional = request.cookies.get("user_type")?.value;
+    const is_medical_professional = request.cookies.get("is_staff")?.value;
 
     // Capture the original URL before redirecting to login
     const originalUrl = request.url;
@@ -15,7 +15,7 @@ export function middleware(request: NextRequest) {
             request.nextUrl.pathname.startsWith("/account/reset-password") ||
             request.nextUrl.pathname.startsWith("/account/verify"))
     ) {
-        if (is_medical_professional) {
+        if (is_medical_professional && is_medical_professional === "true") {
             return Response.redirect(new URL("/staff/", request.url));
         } else {
             return Response.redirect(new URL("/", request.url));
@@ -44,7 +44,7 @@ export function middleware(request: NextRequest) {
     }
 
     if (currentUser && request.nextUrl.pathname.startsWith("/staff")) {
-        if (is_medical_professional) {
+        if (is_medical_professional && is_medical_professional === "true") {
             return;
         } else {
             // return user to non admin section
