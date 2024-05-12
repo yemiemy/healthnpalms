@@ -43,7 +43,7 @@ const SideBar = (props: Props) => {
                 </div>
             </div>
             <Link
-                href="/"
+                href="/staff"
                 className={cn("my-4 px-4 flex justify-center relative", {
                     "bg-white py-2 border-l-2 border-green-500":
                         props.isDashboardActive,
@@ -55,7 +55,7 @@ const SideBar = (props: Props) => {
                 />
             </Link>
             <Link
-                href="/patients"
+                href="/staff/patients"
                 className={cn("my-4 px-4 flex justify-center relative", {
                     "bg-white py-2 border-l-2 border-green-500":
                         props.isPatientsActive,

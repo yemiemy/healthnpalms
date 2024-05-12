@@ -21,14 +21,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-    DropdownMenu,
-    DropdownMenuCheckboxItem,
-    DropdownMenuContent,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { DataTablePagination } from "./DataTablePagination";
 import { DataTableViewOptions } from "./DataTableViewOptions";
 import Link from "next/link";
@@ -84,7 +77,7 @@ export function DataTable<TData, TValue>({
                 />
                 <DataTableViewOptions table={table} />
             </div>
-            <div className="rounded-md border">
+            <div className="rounded-md border overflow-auto max-h-[700px]">
                 <Table>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (

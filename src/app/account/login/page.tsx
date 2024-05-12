@@ -28,7 +28,11 @@ const Page = (props: Props) => {
 
     React.useEffect(() => {
         if (Cookies.get("__token")) {
-            router.replace("/");
+            if (Cookies.get("user_type")) {
+                router.replace("/staff/");
+            } else {
+                router.replace("/");
+            }
         }
     }, [router]);
 
@@ -46,6 +50,9 @@ const Page = (props: Props) => {
             const data = await response.data;
 
             Cookies.set("__token", data.access, {
+                expires: 1,
+            });
+            Cookies.set("user_type", data.access, {
                 expires: 1,
             });
             toast.success("Welcome back!");

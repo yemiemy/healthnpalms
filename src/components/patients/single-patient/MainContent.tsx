@@ -1,10 +1,5 @@
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-} from "@/components/ui/card";
-import { UsersIcon } from "lucide-react";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { ActivitySquareIcon, Ruler, WeightIcon } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 import mountains from "../../../../public/mountains.avif";
@@ -13,7 +8,7 @@ type Props = {};
 
 const MainContent = (props: Props) => {
     return (
-        <div className="w-[70%] flex p-8">
+        <div className="w-full md:w-[70%] flex flex-col gap-4 p-8">
             <Card className="w-full">
                 <CardHeader className="p-0">
                     <div className="w-full relative h-40">
@@ -26,29 +21,32 @@ const MainContent = (props: Props) => {
                             sizes="100vw"
                             className="object-cover rounded-md"
                         />
-                        <div className="absolute w-32 h-32 top-2/3 left-6">
+                    </div>
+                </CardHeader>
+                <CardContent className="pt-4 relative min-h-80">
+                    <div className="flex gap-4">
+                        <div className="-mt-14">
                             <Image
                                 alt="Mountains"
                                 src={mountains}
                                 placeholder="blur"
                                 quality={100}
-                                fill
-                                // sizes="100vw"
-                                className="object-cover rounded-md"
+                                className="rounded-md w-28 h-28"
                             />
                         </div>
+
+                        <div>
+                            <h1 className="text-xl font-extrabold">
+                                Mical Doe
+                            </h1>
+                            <h2 className="font-bold">#p - 123456</h2>
+                            <h2 className="font-normal">
+                                Joined: {new Date().toLocaleString()}
+                            </h2>
+                        </div>
                     </div>
-                </CardHeader>
-                <CardContent className="pt-4 relative min-h-80">
-                    <div className="absolute left-40 ml-2">
-                        <h1 className="text-xl font-extrabold">Mical Doe</h1>
-                        <h2 className="font-bold">#p - 123456</h2>
-                        <h2 className="font-normal">
-                            Joined: {new Date().toLocaleString()}
-                        </h2>
-                    </div>
-                    <div className="pt-24">
-                        <h1 className="text-xl font-bold">Some Nite</h1>
+                    <div className="mt-8">
+                        <h1 className="text-xl font-bold">Some Note</h1>
                         <p>
                             Lorem ipsum dolor sit amet consectetur adipisicing
                             elit. Maxime mollitia, molestiae quas vel sint
@@ -84,6 +82,45 @@ const MainContent = (props: Props) => {
                             corporis!
                         </p>
                     </div>
+                </CardContent>
+            </Card>
+
+            <Card className="w-full">
+                <CardHeader className="border-b">
+                    <div className="w-full">
+                        <h1 className="font-bold">Current Details:</h1>
+                    </div>
+                </CardHeader>
+                <CardContent className="">
+                    <div className="flex flex-row justify-between border-b py-4">
+                        <div>
+                            <p className="text-gray-500">Patient Name:</p>
+                            <p className="font-semibold">Mical Doe</p>
+                        </div>
+                        <div className="text-right">
+                            <p className="text-gray-500">Patient ID:</p>
+                            <p className="font-semibold">123456</p>
+                        </div>
+                    </div>
+                    <div className="grid grid-cols-3 gap-8">
+                        <div className="flex flex-col justify-center items-center py-6">
+                            <WeightIcon strokeWidth={1} />
+                            <small>Weight</small>
+                            <p className="font-semibold">230 lbs</p>
+                        </div>
+
+                        <div className="flex flex-col justify-center items-center py-6 border-l">
+                            <Ruler strokeWidth={1} />
+                            <small>Height</small>
+                            <p className="font-semibold">6&apos;1</p>
+                        </div>
+                        <div className="flex flex-col justify-center items-center py-6 border-l">
+                            <ActivitySquareIcon strokeWidth={1} />
+                            <small>BMI</small>
+                            <p className="font-semibold">23.64</p>
+                        </div>
+                    </div>
+                    <div className="border-t pt-4">Smoking status: No</div>
                 </CardContent>
             </Card>
         </div>

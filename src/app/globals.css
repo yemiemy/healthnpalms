@@ -115,3 +115,15 @@ tbody tr:hover {
   position: relative;
   bottom: -10px;
 }
+
+.rdp-caption_start {
+  width: 100%;
+}
+
+.rdp > div {
+  width: 100%;
+}
+
+.rdp-head > tr, .rdp-tbody > tr {
+  justify-content: space-between;
+}

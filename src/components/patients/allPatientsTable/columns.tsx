@@ -18,9 +18,12 @@ import { DataTableColumnHeader } from "./DataColumnHeader";
 // You can use a Zod schema here if you want.
 export type Payment = {
     id: string;
+    full_name: string;
+    gender: "M" | "F";
+    email: string;
+    date_of_birth: string;
     amount: number;
     status: "pending" | "processing" | "success" | "failed";
-    email: string;
 };
 
 export const columns: ColumnDef<Payment>[] = [
@@ -29,9 +32,21 @@ export const columns: ColumnDef<Payment>[] = [
         header: "Status",
     },
     {
+        accessorKey: "full_name",
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title="Full Name" />
+        ),
+    },
+    {
         accessorKey: "email",
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title="Email" />
+        ),
+    },
+    {
+        accessorKey: "gender",
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title="Gender" />
         ),
     },
     {

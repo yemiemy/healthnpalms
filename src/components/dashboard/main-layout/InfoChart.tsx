@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import PatientChart from "./PatientChart";
 import GenderPieChart from "./GenderPieChart";

@@ -1,16 +1,19 @@
+import { User } from "@/lib/models/accounts/models";
 import Image from "next/image";
 import React from "react";
 
-type Props = {};
+type Props = {
+    user?: User;
+};
 
-const HeroCard = (props: Props) => {
+const HeroCard = ({ user }: Props) => {
     return (
         <div className="flex px-8 py-10 bg-purple-600 text-white dark:bg-slate-800 dark:text-white rounded-lg relative hero-height">
             <div className="w-full md:w-[50%]">
                 <div className="">
                     <h4 className="text-sm lg:text-base">Welcome back,</h4>
                     <h1 className="text-xl lg:text-3xl font-bold my-2">
-                        Dr. Bimbo Oshin
+                        Dr. {user?.first_name + " " + user?.last_name}
                     </h1>
                     <h4 className="text-sm lg:text-base">
                         MD, DM (Cardiology), FACC, FESC

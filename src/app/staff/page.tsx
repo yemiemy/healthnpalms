@@ -1,11 +1,9 @@
 import React from "react";
-import SideBar from "../layouts/SideBar";
-import Main from "./Main";
+import SideBar from "@/components/layouts/SideBar";
+import Main from "@/components/dashboard/Main";
 import axios from "@/lib/api";
 import { toast } from "sonner";
 import { cookies } from "next/headers";
-
-type Props = {};
 
 const getUser = async (token: string) => {
     try {
@@ -21,7 +19,7 @@ const getUser = async (token: string) => {
     }
 };
 
-const Dashboard = async (props: Props) => {
+export default async function Home() {
     const token = cookies().get("__token")?.value;
 
     if (!token || token.length == 0) {
@@ -37,6 +35,4 @@ const Dashboard = async (props: Props) => {
             <Main user={user} />
         </div>
     );
-};
-
-export default Dashboard;
+}

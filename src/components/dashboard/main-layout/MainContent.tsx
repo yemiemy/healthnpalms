@@ -3,13 +3,16 @@ import HeroCard from "./HeroCard";
 // import PatientListCard from "./PatientListCard";
 import ReportCard from "./ReportCard";
 import InfoChart from "./InfoChart";
+import { User } from "@/lib/models/accounts/models";
 
-type Props = {};
+type Props = {
+    user?: User;
+};
 
-const MainContent = (props: Props) => {
+const MainContent = ({ user }: Props) => {
     return (
         <div className="flex-1 flex flex-col gap-8 w-full">
-            <HeroCard />
+            <HeroCard user={user} />
             <ReportCard />
             <InfoChart />
             {/* <PatientListCard /> */}
