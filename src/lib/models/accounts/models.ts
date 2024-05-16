@@ -8,4 +8,6 @@ export interface User {
     email: string;
     is_email_verified: string;
     is_phone_number_verified: string;
+    is_staff: boolean;
+    is_medical_professional: boolean;
 }

@@ -51,6 +51,15 @@ export function middleware(request: NextRequest) {
             return Response.redirect(new URL("/", request.url));
         }
     }
+
+    if (
+        currentUser &&
+        is_medical_professional === "true" &&
+        request.nextUrl.pathname === "/"
+    ) {
+        // return user to non admin section
+        return Response.redirect(new URL("/staff", request.url));
+    }
 }
 
 export const config = {
