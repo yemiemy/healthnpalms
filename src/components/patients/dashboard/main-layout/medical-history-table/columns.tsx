@@ -1,7 +1,7 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDownIcon, MoreVerticalIcon } from "lucide-react";
+import { MoreVerticalIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -13,48 +13,47 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { DataTableColumnHeader } from "./DataColumnHeader";
-import { Patient } from "@/lib/models/patient/models";
+import { VisitHistory } from "@/lib/models/patient/models";
+import { MedicalProfessional } from "@/lib/models/staff/models";
+import Link from "next/link";
 
-export const columns: ColumnDef<Patient>[] = [
+export const columns: ColumnDef<VisitHistory>[] = [
     {
-        accessorKey: "status",
-        header: "Status",
-    },
-    {
-        accessorKey: "full_name",
-        header: ({ column }) => (
-            <DataTableColumnHeader column={column} title="Full Name" />
-        ),
-    },
-    {
-        accessorKey: "email",
-        header: ({ column }) => (
-            <DataTableColumnHeader column={column} title="Email" />
-        ),
-    },
-    {
-        accessorKey: "gender",
-        header: ({ column }) => (
-            <DataTableColumnHeader column={column} title="Gender" />
-        ),
-    },
-    {
-        accessorKey: "amount",
-        header: () => <div className="text-right">Amount</div>,
+        id: "S/N",
+        header: "#",
         cell: ({ row }) => {
-            const amount = parseFloat(row.getValue("amount"));
-            const formatted = new Intl.NumberFormat("en-NG", {
-                style: "currency",
-                currency: "NGN",
-            }).format(amount);
+            return <span>{row.index + 1}</span>;
+        },
+    },
+    {
+        accessorKey: "medical_professional",
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title="Doctor" />
+        ),
+        cell: ({ row }) => {
+            const doctor = row.getValue(
+                "medical_professional"
+            ) as MedicalProfessional;
+            const full_name =
+                doctor.user.first_name + " " + doctor.user.last_name;
 
-            return <div className="text-right font-medium">{formatted}</div>;
+            return <div className="">{full_name}</div>;
+        },
+    },
+    {
+        accessorKey: "visit_date",
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title="Visit Date" />
+        ),
+        cell: ({ row }) => {
+            const date = new Date(row.getValue("visit_date"));
+            return <div className="">{date.toDateString()}</div>;
         },
     },
     {
         id: "actions",
         cell: ({ row }) => {
-            const patient = row.original;
+            const visit_history = row.original;
 
             return (
                 <DropdownMenu>
@@ -68,12 +67,17 @@ export const columns: ColumnDef<Patient>[] = [
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
                         <DropdownMenuItem
                             onClick={() =>
-                                navigator.clipboard.writeText(patient.id)
+                                navigator.clipboard.writeText(visit_history.id)
                             }>
                             Copy patient ID
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem>View customer</DropdownMenuItem>
+                        <DropdownMenuItem>
+                            <Link href={`/visit-history/${visit_history.id}`}>
+                                {" "}
+                                View details
+                            </Link>
+                        </DropdownMenuItem>
                         <DropdownMenuItem>
                             View patient details
                         </DropdownMenuItem>

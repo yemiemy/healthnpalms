@@ -8,8 +8,8 @@ type Props = {
 
 const HeroCard = ({ user }: Props) => {
     return (
-        <div className="flex px-8 py-10 bg-purple-600 text-white dark:bg-slate-800 dark:text-white rounded-lg relative hero-height">
-            <div className="w-full md:w-[50%]">
+        <div className="flex justify-between bg-purple-600 text-white dark:bg-slate-800 dark:text-white rounded-lg hero-height">
+            <div className="w-full px-8 py-10 md:w-[50%]">
                 <div className="">
                     <h4 className="text-sm lg:text-base">Welcome back,</h4>
                     <h1 className="text-xl lg:text-3xl font-bold my-2">
@@ -31,7 +31,7 @@ const HeroCard = ({ user }: Props) => {
                 width={368}
                 height={312}
                 priority={true}
-                className="hidden md:block absolute top-[-20px] left-[40%] lg:left-[50%] w-[368px] h-[284px]"
+                className="hidden md:block h-[105%] -m-[13px]"
             />
         </div>
     );

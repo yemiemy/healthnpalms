@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
-import Appointment from "./Appointment";
-import Appointment2 from "./Appointment2";
+import Appointment from "../staff/dashboard/main-layout/side-content/Appointment";
+import Appointment2 from "../staff/dashboard/main-layout/side-content/Appointment2";
 import { Button } from "@/components/ui/button";
 import { ArrowBigRight, ArrowRight, MoveRightIcon } from "lucide-react";
 

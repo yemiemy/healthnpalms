@@ -1,6 +1,8 @@
 import axios from "@/lib/api";
 import { toast } from "sonner";
 import { cookies } from "next/headers";
+import PatientSideBar from "@/components/layouts/PatientSideBar";
+import Main from "@/components/patients/dashboard/Main";
 
 const getUser = async (token: string) => {
     try {
@@ -27,8 +29,8 @@ export default async function Home() {
     const user = await getUser(token);
     return (
         <div className="flex overflow-hidden">
-            {/* <SideBar isDashboardActive={true} />
-            <Main user={user} /> */}
+            <PatientSideBar isDashboardActive={true} />
+            <Main user={user} />
         </div>
     );
 }

@@ -1,9 +1,10 @@
 import React from "react";
 import InfoCards from "./InfoCards";
 import { DataTable } from "../allPatientsTable/data-table";
-import { Payment, columns } from "../allPatientsTable/columns";
+import { columns } from "../allPatientsTable/columns";
+import { Patient } from "@/lib/models/patient/models";
 
-async function getData(): Promise<Payment[]> {
+async function getData(): Promise<Patient[]> {
     // Fetch data from your API here.
     let data = [];
     for (let i = 0; i < 100; i++) {

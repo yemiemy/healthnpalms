@@ -6,8 +6,8 @@ export interface User {
     date_of_birth: string;
     phone_number: string;
     email: string;
-    is_email_verified: string;
-    is_phone_number_verified: string;
+    is_email_verified: boolean;
+    is_phone_number_verified: boolean;
     is_staff: boolean;
     is_medical_professional: boolean;
 }

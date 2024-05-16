@@ -11,7 +11,7 @@ const Logout = (props: Props) => {
         e.preventDefault();
         Cookies.remove("__token");
         Cookies.remove("is_staff");
-        console.log("LOOOOOOOOOO");
+
         router.replace("/");
     };
 

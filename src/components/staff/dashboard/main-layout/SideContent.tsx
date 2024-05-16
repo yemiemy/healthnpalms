@@ -1,6 +1,6 @@
 import React from "react";
 import ProfileCompletionCard from "./side-content/ProfileCompletionCard";
-import UpcomingAppointmentsCard from "./side-content/UpcomingAppointmentsCard";
+import UpcomingAppointmentsCard from "../../../layouts/UpcomingAppointmentsCard";
 import CalendarCard from "./side-content/CalendarCard";
 
 type Props = {};
