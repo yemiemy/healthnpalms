@@ -1,5 +1,5 @@
 import SideBar from "@/components/layouts/SideBar";
-import Main from "@/components/patients/single-patient/Main";
+import Main from "@/components/staff/patients/single-patient/Main";
 import React from "react";
 
 type Props = {

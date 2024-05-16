@@ -1,6 +1,6 @@
 import React from "react";
 import SideBar from "@/components/layouts/SideBar";
-import Main from "@/components/dashboard/Main";
+import Main from "@/components/staff/dashboard/Main";
 import axios from "@/lib/api";
 import { toast } from "sonner";
 import { cookies } from "next/headers";

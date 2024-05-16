@@ -1,5 +1,5 @@
 import React from "react";
-import DashboardNavBar from "../layouts/DashboardNavBar";
+import DashboardNavBar from "../../layouts/DashboardNavBar";
 import DashboardMainLayout from "./main-layout/DashboardMainLayout";
 import { User } from "@/lib/models/accounts/models";
 
