@@ -29,3 +29,9 @@ export interface VisitHistory {
     treatments_received: string;
     physician_notes: string;
 }
+
+export interface VisitHistoryTableModel {
+    id: string;
+    doctor: string;
+    visit_date: string;
+}

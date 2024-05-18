@@ -13,11 +13,14 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { DataTableColumnHeader } from "./DataColumnHeader";
-import { VisitHistory } from "@/lib/models/patient/models";
+import {
+    VisitHistory,
+    VisitHistoryTableModel,
+} from "@/lib/models/patient/models";
 import { MedicalProfessional } from "@/lib/models/staff/models";
 import Link from "next/link";
 
-export const columns: ColumnDef<VisitHistory>[] = [
+export const columns: ColumnDef<VisitHistoryTableModel>[] = [
     {
         id: "S/N",
         header: "#",
@@ -26,18 +29,19 @@ export const columns: ColumnDef<VisitHistory>[] = [
         },
     },
     {
-        accessorKey: "medical_professional",
+        accessorKey: "doctor",
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title="Doctor" />
         ),
         cell: ({ row }) => {
-            const doctor = row.getValue(
-                "medical_professional"
-            ) as MedicalProfessional;
-            const full_name =
-                doctor.user.first_name + " " + doctor.user.last_name;
-
-            return <div className="">{full_name}</div>;
+            const visit_history = row.original;
+            return (
+                <Link
+                    // @ts-ignore
+                    href={`/visit-history/${visit_history.id}`}>
+                    <div className="">{visit_history.doctor}</div>
+                </Link>
+            );
         },
     },
     {
@@ -46,8 +50,15 @@ export const columns: ColumnDef<VisitHistory>[] = [
             <DataTableColumnHeader column={column} title="Visit Date" />
         ),
         cell: ({ row }) => {
-            const date = new Date(row.getValue("visit_date"));
-            return <div className="">{date.toDateString()}</div>;
+            const visit_history = row.original;
+            const date = new Date(visit_history.visit_date);
+            return (
+                <Link
+                    // @ts-ignore
+                    href={`/visit-history/${visit_history.id}`}>
+                    <div className="">{date.toDateString()}</div>
+                </Link>
+            );
         },
     },
     {
@@ -74,12 +85,8 @@ export const columns: ColumnDef<VisitHistory>[] = [
                         <DropdownMenuSeparator />
                         <DropdownMenuItem>
                             <Link href={`/visit-history/${visit_history.id}`}>
-                                {" "}
-                                View details
+                                View patient details
                             </Link>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
-                            View patient details
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>

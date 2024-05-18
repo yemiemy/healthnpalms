@@ -62,15 +62,15 @@ export function DataTable<TData, TValue>({
         <div className="">
             <div className="flex items-center py-4 gap-2">
                 <Input
-                    placeholder="Filter Doctor..."
+                    placeholder="Filter by doctor's name..."
                     value={
                         (table
-                            .getColumn("medical_professional")
+                            .getColumn("doctor")
                             ?.getFilterValue() as string) ?? ""
                     }
                     onChange={(event) =>
                         table
-                            .getColumn("medical_professional")
+                            .getColumn("doctor")
                             ?.setFilterValue(event.target.value)
                     }
                     className="max-w-sm"
@@ -107,18 +107,12 @@ export function DataTable<TData, TValue>({
                                         row.getIsSelected() && "selected"
                                     }>
                                     {row.getVisibleCells().map((cell) => {
-                                        const visit_history = row.original;
                                         return (
                                             <TableCell key={cell.id}>
-                                                <Link
-                                                    // @ts-ignore
-                                                    href={`/visit-history/${visit_history.id}`}>
-                                                    {flexRender(
-                                                        cell.column.columnDef
-                                                            .cell,
-                                                        cell.getContext()
-                                                    )}
-                                                </Link>
+                                                {flexRender(
+                                                    cell.column.columnDef.cell,
+                                                    cell.getContext()
+                                                )}
                                             </TableCell>
                                         );
                                     })}

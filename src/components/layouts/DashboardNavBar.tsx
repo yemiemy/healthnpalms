@@ -60,7 +60,7 @@ const DashboardNavBar = ({ user }: Props) => {
                     <div className="flex gap-2 items-center">
                         <Image
                             src={user?.avatar ? user.avatar : "/avatar-2.jpg"}
-                            className="rounded-full"
+                            className="rounded-full w-auto h-auto"
                             alt="user-avatar"
                             width={30}
                             height={30}
