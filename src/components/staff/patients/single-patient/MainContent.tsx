@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { ActivitySquareIcon, Ruler, WeightIcon } from "lucide-react";
 import Image from "next/image";
 import React from "react";
-import mountains from "../../../../public/mountains.avif";
+import mountains from "../../../../../public/mountains.avif";
 
 type Props = {};
 
