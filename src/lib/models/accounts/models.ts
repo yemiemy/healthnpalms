@@ -5,6 +5,10 @@ export interface User {
     avatar: string;
     date_of_birth: string;
     phone_number: string;
+    address_1: string;
+    address_2: string;
+    state: string;
+    country: string;
     email: string;
     is_email_verified: boolean;
     is_phone_number_verified: boolean;

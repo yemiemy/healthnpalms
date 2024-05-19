@@ -29,7 +29,7 @@ export default async function Home() {
     const user = await getUser(token);
     return (
         <div className="flex overflow-hidden">
-            <PatientSideBar isDashboardActive={true} />
+            <PatientSideBar isDashboardActive isPatient />
             <Main user={user} />
         </div>
     );

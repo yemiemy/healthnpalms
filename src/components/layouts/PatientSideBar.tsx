@@ -18,10 +18,12 @@ type Props = {
     isPatientsActive?: boolean;
     isAppointmentsActive?: boolean;
     isSettingsActive?: boolean;
+    isPatient?: boolean;
 };
 
 const PatientSideBar = (props: Props) => {
     const [collapsed, setCollapsed] = React.useState<boolean>(true);
+    console.log(props.isPatient);
     return collapsed ? (
         <div className="bg-green-100 max-w-[10%] min-h-screen max-h-screen break-words hidden md:flex md:flex-col">
             <div className="relative p-4">
@@ -43,7 +45,7 @@ const PatientSideBar = (props: Props) => {
                 </div>
             </div>
             <Link
-                href="/staff"
+                href={props.isPatient ? "/" : "/staff"}
                 className={cn("my-4 px-4 flex justify-center relative", {
                     "bg-white py-2 border-l-2 border-green-500":
                         props.isDashboardActive,
@@ -55,7 +57,7 @@ const PatientSideBar = (props: Props) => {
                 />
             </Link>
             <Link
-                href="/staff/patients"
+                href={props.isPatient ? "/profile" : "/staff/patients"}
                 className={cn("my-4 px-4 flex justify-center relative", {
                     "bg-white py-2 border-l-2 border-green-500":
                         props.isPatientsActive,
@@ -130,7 +132,7 @@ const PatientSideBar = (props: Props) => {
             </Link>
 
             <Link
-                href="/"
+                href={props.isPatient ? "/profile" : "/staff/patients"}
                 className={cn(
                     "my-4 px-4 flex items-center text-sm text-slate-500 hover:text-green-500",
                     {
@@ -143,7 +145,7 @@ const PatientSideBar = (props: Props) => {
                     width={15}
                     height={15}
                 />
-                Patients
+                {props.isPatient ? "Profile" : "Patients"}
             </Link>
 
             <Link

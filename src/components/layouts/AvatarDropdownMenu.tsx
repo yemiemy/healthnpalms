@@ -15,6 +15,7 @@ import {
     DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import Logout from "../utils/Logout";
+import Link from "next/link";
 
 type Props = {
     mobile?: boolean;
@@ -50,8 +51,10 @@ export function AvatarDropdownMenu({ mobile, staff }: Props) {
             )}
             <DropdownMenuGroup>
                 <DropdownMenuItem>
-                    <User className="mr-2 h-4 w-4" />
-                    <span>Profile</span>
+                    <Link href="/profile" className="flex">
+                        <User className="mr-2 h-4 w-4" />
+                        <span>Profile</span>
+                    </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
                     <Settings className="mr-2 h-4 w-4" />
