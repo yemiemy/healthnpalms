@@ -1,4 +1,5 @@
 "use client";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -13,19 +14,78 @@ import {
 } from "@/components/ui/select";
 import { User } from "@/lib/models/accounts/models";
 import React from "react";
+import axios from "@/lib/api";
+import { toast } from "sonner";
+import { Patient } from "@/lib/models/patient/models";
 
 type Props = {
     user?: User;
+    token?: string;
 };
 
-const SideContent = ({ user }: Props) => {
+const SideContent = ({ user, token }: Props) => {
+    const [patientData, setPatientData] = React.useState<Patient>();
+
+    const handleInputChange = (event: any) => {
+        const { name, value } = event.target;
+        setPatientData({ ...patientData, [name]: value });
+    };
+    const handlePatientProfileUpdate = async (e: any) => {
+        e.preventDefault();
+        try {
+            const response = await axios.put(
+                "/accounts/patient/",
+                patientData,
+                {
+                    headers: {
+                        Authorization: `Token ${token}`,
+                    },
+                }
+            );
+            const data = response.data;
+            setPatientData(data);
+            toast.success("Medical profile updated successfully.");
+        } catch (err: any) {
+            console.log("Error:", err);
+            toast.error("An error occurred updating your medical profile.");
+        }
+    };
+
+    const getPatientData = React.useCallback(async () => {
+        try {
+            const response = await axios.get("/accounts/patient/", {
+                headers: {
+                    Authorization: `Token ${token}`,
+                },
+            });
+            const data = response.data;
+            setPatientData(data);
+        } catch (err: any) {
+            console.log("Error:", err);
+            toast.error("An error occurred getting patient data.");
+        }
+    }, [token]);
+
+    React.useEffect(() => {
+        getPatientData();
+    }, [getPatientData]);
+    console.log(patientData?.smoking_status, "sommmm");
+    if (!patientData) {
+        return (
+            <div className="flex gap-8 flex-col self-start w-full md:w-[30%] rounded-md h-full">
+                No patient data.
+            </div>
+        );
+    }
     return (
         <div className="flex gap-8 flex-col self-start w-full md:w-[30%] rounded-md h-full">
             <div className="">
                 <h1 className="font-semibold text-3xl">Medical Profile</h1>
                 <p>You can update your medical profile details below.</p>
             </div>
-            <form className="flex flex-col gap-8">
+            <form
+                className="flex flex-col gap-8"
+                onSubmit={handlePatientProfileUpdate}>
                 <Card>
                     <CardHeader className="">
                         <h1 className="font-semibold">Health and Habits</h1>
@@ -37,13 +97,25 @@ const SideContent = ({ user }: Props) => {
                                     <Label htmlFor="">Smoking status</Label>
                                     <Select
                                         onValueChange={(value) => {
-                                            console.log(
-                                                value,
-                                                "this is select value"
-                                            );
+                                            handleInputChange({
+                                                target: {
+                                                    name: "smoking_status",
+                                                    value,
+                                                },
+                                            });
                                         }}>
                                         <SelectTrigger className="w-full]">
-                                            <SelectValue placeholder="Do you smoke?" />
+                                            <SelectValue
+                                                placeholder={
+                                                    patientData.smoking_status ===
+                                                    "Y"
+                                                        ? "Yes"
+                                                        : patientData.smoking_status ===
+                                                          "N"
+                                                        ? "No"
+                                                        : "Do you smoke?"
+                                                }
+                                            />
                                         </SelectTrigger>
                                         <SelectContent>
                                             <SelectGroup>
@@ -66,13 +138,25 @@ const SideContent = ({ user }: Props) => {
                                     </Label>
                                     <Select
                                         onValueChange={(value) => {
-                                            console.log(
-                                                value,
-                                                "this is select value"
-                                            );
+                                            handleInputChange({
+                                                target: {
+                                                    name: "alcohol_consumption",
+                                                    value,
+                                                },
+                                            });
                                         }}>
                                         <SelectTrigger className="w-full]">
-                                            <SelectValue placeholder="Do you drink alcohol?" />
+                                            <SelectValue
+                                                placeholder={
+                                                    patientData.alcohol_consumption ===
+                                                    "Y"
+                                                        ? "Yes"
+                                                        : patientData.alcohol_consumption ===
+                                                          "N"
+                                                        ? "No"
+                                                        : "Do you drink alcohol?"
+                                                }
+                                            />
                                         </SelectTrigger>
                                         <SelectContent>
                                             <SelectGroup>
@@ -94,10 +178,11 @@ const SideContent = ({ user }: Props) => {
                                 <Label htmlFor="allergies">Allergies</Label>
                                 <Input
                                     id="allergies"
+                                    name="allergies"
                                     type="text"
                                     placeholder="Allergies"
-                                    // value={user?.first_name}
-                                    // required
+                                    value={patientData.allergies || ""}
+                                    onChange={handleInputChange}
                                 />
                             </div>
                         </div>
@@ -114,13 +199,20 @@ const SideContent = ({ user }: Props) => {
                                     <Label htmlFor="">Blood group</Label>
                                     <Select
                                         onValueChange={(value) => {
-                                            console.log(
-                                                value,
-                                                "this is select value"
-                                            );
+                                            handleInputChange({
+                                                target: {
+                                                    name: "blood_group",
+                                                    value,
+                                                },
+                                            });
                                         }}>
                                         <SelectTrigger className="w-full]">
-                                            <SelectValue placeholder="What is your blood group?" />
+                                            <SelectValue
+                                                placeholder={
+                                                    patientData.blood_group ||
+                                                    "What is your blood group?"
+                                                }
+                                            />
                                         </SelectTrigger>
                                         <SelectContent>
                                             <SelectGroup>
@@ -150,13 +242,20 @@ const SideContent = ({ user }: Props) => {
                                     <Label htmlFor="">Genotype</Label>
                                     <Select
                                         onValueChange={(value) => {
-                                            console.log(
-                                                value,
-                                                "this is select value"
-                                            );
+                                            handleInputChange({
+                                                target: {
+                                                    name: "genotype",
+                                                    value,
+                                                },
+                                            });
                                         }}>
-                                        <SelectTrigger className="w-full]">
-                                            <SelectValue placeholder="What is your genotype?" />
+                                        <SelectTrigger className="w-full">
+                                            <SelectValue
+                                                placeholder={
+                                                    patientData.genotype ||
+                                                    "What is your genotype?"
+                                                }
+                                            />
                                         </SelectTrigger>
                                         <SelectContent>
                                             <SelectGroup>
@@ -214,8 +313,11 @@ const SideContent = ({ user }: Props) => {
                                 <div className="flex items-center h-10 w-full rounded-md bg-background text-sm disabled:cursor-not-allowed disabled:opacity-50">
                                     <Input
                                         type="number"
+                                        name="height"
                                         className="w-32 mr-1"
                                         min={0}
+                                        value={patientData.height || 0}
+                                        onChange={handleInputChange}
                                     />
                                     <span className="font-semibold">cm</span>
                                 </div>
@@ -225,8 +327,11 @@ const SideContent = ({ user }: Props) => {
                                 <div className="flex items-center h-10 w-full rounded-md bg-background text-sm disabled:cursor-not-allowed disabled:opacity-50">
                                     <Input
                                         type="number"
+                                        name="weight"
                                         className="w-32 mr-1"
                                         min={0}
+                                        value={patientData.weight || 0}
+                                        onChange={handleInputChange}
                                     />
                                     <span className="font-semibold">kg</span>
                                 </div>
@@ -234,6 +339,10 @@ const SideContent = ({ user }: Props) => {
                         </div>
                     </CardContent>
                 </Card>
+
+                <div className="w-full -mt-4">
+                    <Button className="w-fit float-right">Save Changes</Button>
+                </div>
             </form>
         </div>
     );

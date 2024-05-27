@@ -33,7 +33,7 @@ const Page = async (props: Props) => {
     return (
         <div className="flex overflow-hidden">
             <PatientSideBar isPatientsActive isPatient />
-            <Main user={user} />
+            <Main initialUser={user} token={token} />
         </div>
     );
 };

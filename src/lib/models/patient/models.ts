@@ -1,13 +1,20 @@
+import { User } from "../accounts/models";
 import { MedicalProfessional } from "../staff/models";
 
 export interface Patient {
     id: string;
-    full_name: string;
-    gender: "M" | "F";
-    email: string;
-    date_of_birth: string;
-    amount: number;
-    status: "pending" | "processing" | "success" | "failed";
+    user?: User;
+    allergies: string;
+    blood_group: string;
+    genotype: string;
+    smoking_status: string;
+    alcohol_consumption: string;
+    height?: number;
+    weight?: number;
+    bmi?: number;
+    emergency_contact: string;
+    preferred_pharmacy: string;
+    preferred_language: string;
 }
 
 export interface MedicalHistory {
