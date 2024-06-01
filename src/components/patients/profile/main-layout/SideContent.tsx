@@ -17,6 +17,7 @@ import React from "react";
 import axios from "@/lib/api";
 import { toast } from "sonner";
 import { Patient } from "@/lib/models/patient/models";
+import { Textarea } from "@/components/ui/textarea";
 
 type Props = {
     user?: User;
@@ -28,6 +29,7 @@ const SideContent = ({ user, token }: Props) => {
 
     const handleInputChange = (event: any) => {
         const { name, value } = event.target;
+        // @ts-ignore
         setPatientData({ ...patientData, [name]: value });
     };
     const handlePatientProfileUpdate = async (e: any) => {
@@ -69,7 +71,6 @@ const SideContent = ({ user, token }: Props) => {
     React.useEffect(() => {
         getPatientData();
     }, [getPatientData]);
-    console.log(patientData?.smoking_status, "sommmm");
     if (!patientData) {
         return (
             <div className="flex gap-8 flex-col self-start w-full md:w-[30%] rounded-md h-full">
@@ -336,6 +337,32 @@ const SideContent = ({ user, token }: Props) => {
                                     <span className="font-semibold">kg</span>
                                 </div>
                             </div>
+                        </div>
+                    </CardContent>
+                </Card>
+                <Card>
+                    <CardHeader className="">
+                        <div>
+                            <h1>Emergency Contact Details</h1>
+                        </div>
+                    </CardHeader>
+                    <CardContent className="">
+                        <div className="grid gap-4">
+                            {/* <Label htmlFor="">Height</Label> */}
+                            <Textarea
+                                name="emergency_contact"
+                                className="w-full border rounded-md"
+                                rows={5}
+                                value={
+                                    patientData.emergency_contact ||
+                                    `Full Name:
+Phone Number:
+Email Address:
+Home Address:
+                                `
+                                }
+                                onChange={handleInputChange}
+                            />
                         </div>
                     </CardContent>
                 </Card>

@@ -7,6 +7,7 @@ import React from "react";
 import { toast } from "sonner";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
+import AuthPageLogo from "@/components/layouts/AuthPageLogo";
 
 type Props = {};
 
@@ -58,6 +59,7 @@ const Page = (props: Props) => {
     return (
         <div className="flex items-center justify-center min-h-screen">
             <div className="flex flex-col items-center justify-center w-full max-w-screen-xl p-4 sm:px-6 sm:py-4 lg:px-8 lg:py-4">
+                <AuthPageLogo />
                 <div className="text-center mb-4 text-2xl font-semibold">
                     Forgot Password
                 </div>
