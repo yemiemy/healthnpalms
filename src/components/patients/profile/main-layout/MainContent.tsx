@@ -27,7 +27,6 @@ type Props = {
 const PHONE_REGEX =
     /^\+234\d{10}$|^070\d{7}$|^080\d{7}$|^081\d{7}$|^090\d{7}$|^091\d{7}$/;
 const MainContent = ({ user, setUser, token }: Props) => {
-    console.log(user);
     const [date_of_birth, setDateOfBirth] = React.useState<Date | undefined>(
         user.date_of_birth ? new Date(user.date_of_birth) : undefined
     );

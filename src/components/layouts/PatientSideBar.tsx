@@ -23,7 +23,6 @@ type Props = {
 
 const PatientSideBar = (props: Props) => {
     const [collapsed, setCollapsed] = React.useState<boolean>(true);
-    console.log(props.isPatient);
     return collapsed ? (
         <div className="bg-green-100 max-w-[10%] min-h-screen max-h-screen break-words hidden md:flex md:flex-col">
             <div className="relative p-4">
