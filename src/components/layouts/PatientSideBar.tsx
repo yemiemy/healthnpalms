@@ -6,6 +6,7 @@ import {
     ChevronRightCircleIcon,
     ChevronRightIcon,
     LayoutGridIcon,
+    MessagesSquareIcon,
     SettingsIcon,
     StethoscopeIcon,
     UserIcon,
@@ -19,6 +20,7 @@ type Props = {
     isAppointmentsActive?: boolean;
     isSettingsActive?: boolean;
     isPatient?: boolean;
+    isChat?: boolean;
 };
 
 const PatientSideBar = (props: Props) => {
@@ -79,6 +81,20 @@ const PatientSideBar = (props: Props) => {
                     height={15}
                 />
             </Link>
+            {props.isPatient && (
+                <Link
+                    href="/health-assistant"
+                    className={cn("my-4 px-4 flex justify-center relative", {
+                        "bg-white py-2 border-l-2 border-green-500":
+                            props.isChat,
+                    })}>
+                    <MessagesSquareIcon
+                        className="hover:text-green-500 text-slate-500"
+                        width={15}
+                        height={15}
+                    />
+                </Link>
+            )}
             <Link
                 href="/account/settings"
                 className={cn("my-4 px-4 flex justify-center relative", {
@@ -163,6 +179,25 @@ const PatientSideBar = (props: Props) => {
                 />
                 Appointments
             </Link>
+
+            {props.isPatient && (
+                <Link
+                    href="/health-assistant"
+                    className={cn(
+                        "my-4 px-4 flex items-center text-sm text-slate-500 hover:text-green-500",
+                        {
+                            "border-l-2 border-green-500 bg-white py-2":
+                                props.isChat,
+                        }
+                    )}>
+                    <MessagesSquareIcon
+                        className="hover:text-green-500 text-slate-500 mr-1"
+                        width={15}
+                        height={15}
+                    />
+                    Chat
+                </Link>
+            )}
 
             <Link
                 href="/account/settings"

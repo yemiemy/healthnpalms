@@ -33,8 +33,6 @@ export async function POST(req: Request) {
 
         const prompt = PromptTemplate.fromTemplate(PROMPT_TEMPLATE);
 
-        console.log("HERE IS THE PROMPT\n", prompt, prompt.toJSON());
-
         const model = new ChatOpenAI({
             apiKey: process.env.OPENAI_API_KEY!,
             model: "gpt-3.5-turbo",

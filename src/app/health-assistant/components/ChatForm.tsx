@@ -28,8 +28,14 @@ const ChatForm = ({
                         autoCorrect="off"
                         name="message"
                         rows={1}
-                        style={{
-                            height: "62px !important",
+                        // style={{
+                        //     height: "62px !important",
+                        // }}
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter" && !e.shiftKey) {
+                                e.preventDefault();
+                                handleSubmit(e);
+                            }
                         }}></textarea>
                     <div className="absolute right-0 top-[13px] sm:right-4">
                         <button
