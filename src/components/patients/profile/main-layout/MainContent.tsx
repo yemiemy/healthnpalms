@@ -282,6 +282,9 @@ const MainContent = ({ user, setUser, token }: Props) => {
                                                 mode="single"
                                                 selected={date_of_birth}
                                                 onSelect={setDateOfBirth}
+                                                fromYear={1900}
+                                                toYear={new Date().getFullYear()}
+                                                captionLayout="dropdown-buttons"
                                                 initialFocus
                                             />
                                         </PopoverContent>

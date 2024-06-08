@@ -70,7 +70,7 @@ const PatientSideBar = (props: Props) => {
                 />
             </Link>
             <Link
-                href="/"
+                href={props.isPatient ? "/appointments" : "/staff/appointments"}
                 className={cn("my-4 px-4 flex justify-center relative", {
                     "bg-white py-2 border-l-2 border-green-500":
                         props.isAppointmentsActive,

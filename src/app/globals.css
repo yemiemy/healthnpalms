@@ -96,6 +96,15 @@ tbody tr:hover {
   background-color: #f1f5f9;
 } */
 
+.rdp-dropdown_month > .text-sm.font-medium, .rdp-vhidden, .rdp-dropdown_year > .text-sm.font-medium {
+  display: none;
+}
+
+.rdp-caption_dropdowns {
+  display: flex;
+  gap: 12px;
+}
+
 .hero-height {
   height: 264px!important;
   min-height: 264px!important;

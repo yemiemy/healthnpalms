@@ -1,7 +1,5 @@
 "use client";
 
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { useChat } from "ai/react";
 import React, { useRef, useEffect, useState, useCallback } from "react";
 import Cookies from "js-cookie";

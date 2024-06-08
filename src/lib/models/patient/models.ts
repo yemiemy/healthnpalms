@@ -42,3 +42,24 @@ export interface VisitHistoryTableModel {
     doctor: string;
     visit_date: string;
 }
+
+export interface Appointment {
+    id: string;
+    patient: Patient;
+    doctor: MedicalProfessional;
+    note?: string;
+    status: string;
+    start_time: string;
+    end_time: string;
+    created_at: string;
+}
+
+export interface AppointmentTableModel {
+    id: string;
+    doctor: string;
+    note?: string;
+    status: string;
+    start_time: string;
+    end_time: string;
+    created_at: string;
+}
