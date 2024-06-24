@@ -1,3 +1,4 @@
+"use client";
 import { User } from "@/lib/models/accounts/models";
 import React from "react";
 import MainContent from "./MainContent";

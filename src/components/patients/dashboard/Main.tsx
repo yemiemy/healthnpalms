@@ -1,3 +1,4 @@
+"use client";
 import DashboardNavBar from "@/components/layouts/DashboardNavBar";
 import { User } from "@/lib/models/accounts/models";
 import React from "react";
