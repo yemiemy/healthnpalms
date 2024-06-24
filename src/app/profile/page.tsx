@@ -24,7 +24,6 @@ const Page = async (props: Props) => {
     const token = cookies().get("__token")?.value;
 
     if (!token || token.length == 0) {
-        toast.error("Please login to continue.");
         return Response.redirect(new URL("/account/login?next=/", "/profile"));
     }
 

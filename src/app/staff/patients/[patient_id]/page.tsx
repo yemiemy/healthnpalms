@@ -37,7 +37,6 @@ const getDoctor = async (token: string) => {
         return response.data;
     } catch (err: any) {
         console.log("Error", err);
-        toast.error("Couldn't connect with the server");
     }
 };
 
@@ -45,7 +44,6 @@ const Page = async ({ params: { patient_id } }: Props) => {
     const token = cookies().get("__token")?.value;
 
     if (!token || token.length == 0) {
-        toast.error("Please login to continue.");
         return Response.redirect(new URL("/account/login?next=/", "/"));
     }
 

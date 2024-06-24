@@ -57,7 +57,7 @@ export function middleware(request: NextRequest) {
         is_medical_professional === "true" &&
         request.nextUrl.pathname === "/"
     ) {
-        // return user to non admin section
+        // return user to admin section
         return Response.redirect(new URL("/staff", request.url));
     }
 }
