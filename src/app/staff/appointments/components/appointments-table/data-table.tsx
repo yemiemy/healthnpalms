@@ -111,10 +111,7 @@ export function DataTable<TData, TValue>({
                                     data-state={
                                         row.getIsSelected() && "selected"
                                     }
-                                    className="cursor-pointer"
-                                    onClick={(e) =>
-                                        goToAppointmentDetail(row.original.id!)
-                                    }>
+                                    className="cursor-pointer">
                                     {row.getVisibleCells().map((cell) => {
                                         return (
                                             <TableCell key={cell.id}>

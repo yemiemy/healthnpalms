@@ -30,36 +30,9 @@ import { MoreHorizontal } from "lucide-react";
 import { DataTableColumnHeader } from "./components/appointments-table/DataTableColumnHeader";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 type Props = {};
-
-export const handleAppointmentStatusUpdate = async (
-    appointment: DoctorAppointmentTableModel,
-    status: string
-) => {
-    const token = Cookies.get("__token");
-    try {
-        await axios.put(
-            `/appointments/staff/${appointment.id}/`,
-            JSON.stringify({
-                medical_professional_id: appointment.medical_professional_id,
-                start_time: appointment.start_time,
-                end_time: appointment.end_time,
-                status,
-                is_status_update: true,
-            }),
-            {
-                headers: {
-                    Authorization: `Token ${token}`,
-                },
-            }
-        );
-        toast.success("Appointment updated successfully.");
-    } catch (err: any) {
-        console.log("Error getting user:", err);
-        toast.error("Unable to update your appointment. Please try again.");
-    }
-};
 
 const Page = (props: Props) => {
     const router = useRouter();
@@ -127,12 +100,45 @@ const Page = (props: Props) => {
         getAppointmentsData();
     }, [refreshAppointments, getAppointmentsData]);
 
+    const handleAppointmentStatusUpdate = async (
+        appointment: DoctorAppointmentTableModel,
+        status: string
+    ) => {
+        const token = Cookies.get("__token");
+        try {
+            await axios.put(
+                `/appointments/staff/${appointment.id}/`,
+                JSON.stringify({
+                    medical_professional_id:
+                        appointment.medical_professional_id,
+                    start_time: appointment.start_time,
+                    end_time: appointment.end_time,
+                    status,
+                    is_status_update: true,
+                }),
+                {
+                    headers: {
+                        Authorization: `Token ${token}`,
+                    },
+                }
+            );
+            toast.success("Appointment updated successfully.");
+        } catch (err: any) {
+            console.log("Error getting user:", err);
+            toast.error("Unable to update your appointment. Please try again.");
+        }
+    };
+
     const columns: ColumnDef<DoctorAppointmentTableModel>[] = [
         {
             id: "S/N",
             header: "#",
             cell: ({ row }) => {
-                return <span>{row.index + 1}</span>;
+                return (
+                    <Link href={`/staff/appointments/${row.original.id}`}>
+                        {row.index + 1}
+                    </Link>
+                );
             },
         },
         {
@@ -142,7 +148,11 @@ const Page = (props: Props) => {
             ),
             cell: ({ row }) => {
                 const appointment = row.original;
-                return <div className="">{appointment.patient}</div>;
+                return (
+                    <Link href={`/staff/appointments/${appointment.id}`}>
+                        {appointment.patient}
+                    </Link>
+                );
             },
         },
         {
@@ -152,7 +162,11 @@ const Page = (props: Props) => {
             ),
             cell: ({ row }) => {
                 const appointment = row.original;
-                return <div className="">{appointment.note}</div>;
+                return (
+                    <Link href={`/staff/appointments/${appointment.id}`}>
+                        {appointment.note}
+                    </Link>
+                );
             },
         },
         {
@@ -191,9 +205,9 @@ const Page = (props: Props) => {
             cell: ({ row }) => {
                 const appointment = row.original;
                 return (
-                    <div className="">
+                    <Link href={`/staff/appointments/${appointment.id}`}>
                         {format(appointment.start_time, "PPPP KK:mm:ss a")}
-                    </div>
+                    </Link>
                 );
             },
         },
@@ -205,9 +219,9 @@ const Page = (props: Props) => {
             cell: ({ row }) => {
                 const appointment = row.original;
                 return (
-                    <div className="">
+                    <Link href={`/staff/appointments/${appointment.id}`}>
                         {format(appointment.created_at, "PPPP KK:mm:ss a")}
-                    </div>
+                    </Link>
                 );
             },
         },
