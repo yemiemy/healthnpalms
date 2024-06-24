@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import axios from "@/lib/api";
 import { Loader } from "lucide-react";
-import React, { useEffect } from "react";
+import React, { Suspense, useEffect } from "react";
 import { toast } from "sonner";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
@@ -117,69 +117,73 @@ const Page = (props: Props) => {
     }, [minutes, seconds]);
 
     return (
-        <div className="flex items-center justify-center min-h-screen">
-            <div className="flex flex-col items-center justify-center w-full max-w-screen-xl p-4 sm:px-6 sm:py-4 lg:px-8 lg:py-4">
-                <AuthPageLogo />
-                <div className="text-center text-2xl font-semibold">
-                    Verify Your Account!
-                </div>
-                <div className="text-center text-sm mb-8">
-                    <span>Enter the 6-digit code sent to your email.</span>
-                </div>
-                <form className="w-full md:max-w-sm" onSubmit={handleSubmit}>
-                    <div className="flex justify-center">
-                        <InputOTP
-                            maxLength={6}
-                            value={verification_code}
-                            onChange={(value) => setOTP(value)}
-                            ref={otpRef}
-                            pattern={REGEXP_ONLY_DIGITS}>
-                            <InputOTPGroup>
-                                <InputOTPSlot index={0} />
-                                <InputOTPSlot index={1} />
-                                <InputOTPSlot index={2} />
-                            </InputOTPGroup>
-                            <InputOTPSeparator />
-                            <InputOTPGroup>
-                                <InputOTPSlot index={3} />
-                                <InputOTPSlot index={4} />
-                                <InputOTPSlot index={5} />
-                            </InputOTPGroup>
-                        </InputOTP>
+        <Suspense fallback={<div>Loading...</div>}>
+            <div className="flex items-center justify-center min-h-screen">
+                <div className="flex flex-col items-center justify-center w-full max-w-screen-xl p-4 sm:px-6 sm:py-4 lg:px-8 lg:py-4">
+                    <AuthPageLogo />
+                    <div className="text-center text-2xl font-semibold">
+                        Verify Your Account!
                     </div>
-                    <div className="flex justify-center">
-                        <Button
-                            type="submit"
-                            className="w-full sm:w-[73%] text-white mt-4"
-                            disabled={loader}>
-                            {loader ? (
-                                <Loader className="animate-spin" />
-                            ) : (
-                                "Verify"
-                            )}
-                        </Button>
+                    <div className="text-center text-sm mb-8">
+                        <span>Enter the 6-digit code sent to your email.</span>
                     </div>
-                    <div className="flex justify-center mt-2">
-                        <div className="w-full sm:w-[73%] flex justify-between text-sm">
-                            <div className="font-medium">
-                                {minutes < 10 ? `0${minutes}` : minutes}:
-                                {seconds < 10 ? `0${seconds}` : seconds}
-                            </div>
+                    <form
+                        className="w-full md:max-w-sm"
+                        onSubmit={handleSubmit}>
+                        <div className="flex justify-center">
+                            <InputOTP
+                                maxLength={6}
+                                value={verification_code}
+                                onChange={(value) => setOTP(value)}
+                                ref={otpRef}
+                                pattern={REGEXP_ONLY_DIGITS}>
+                                <InputOTPGroup>
+                                    <InputOTPSlot index={0} />
+                                    <InputOTPSlot index={1} />
+                                    <InputOTPSlot index={2} />
+                                </InputOTPGroup>
+                                <InputOTPSeparator />
+                                <InputOTPGroup>
+                                    <InputOTPSlot index={3} />
+                                    <InputOTPSlot index={4} />
+                                    <InputOTPSlot index={5} />
+                                </InputOTPGroup>
+                            </InputOTP>
+                        </div>
+                        <div className="flex justify-center">
+                            <Button
+                                type="submit"
+                                className="w-full sm:w-[73%] text-white mt-4"
+                                disabled={loader}>
+                                {loader ? (
+                                    <Loader className="animate-spin" />
+                                ) : (
+                                    "Verify"
+                                )}
+                            </Button>
+                        </div>
+                        <div className="flex justify-center mt-2">
+                            <div className="w-full sm:w-[73%] flex justify-between text-sm">
+                                <div className="font-medium">
+                                    {minutes < 10 ? `0${minutes}` : minutes}:
+                                    {seconds < 10 ? `0${seconds}` : seconds}
+                                </div>
 
-                            <div>
-                                <button
-                                    type="button"
-                                    className="border-none font-medium hover:underline text-green-500 disabled:text-slate-300 disabled:cursor-not-allowed"
-                                    disabled={seconds > 0 || minutes > 0}
-                                    onClick={resendOTP}>
-                                    Resend OTP
-                                </button>
+                                <div>
+                                    <button
+                                        type="button"
+                                        className="border-none font-medium hover:underline text-green-500 disabled:text-slate-300 disabled:cursor-not-allowed"
+                                        disabled={seconds > 0 || minutes > 0}
+                                        onClick={resendOTP}>
+                                        Resend OTP
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
-        </div>
+        </Suspense>
     );
 };
 

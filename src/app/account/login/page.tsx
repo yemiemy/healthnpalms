@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import axios from "@/lib/api";
 import { Loader } from "lucide-react";
 import Link from "next/link";
-import React from "react";
+import React, { Suspense } from "react";
 import { toast } from "sonner";
 import Cookies from "js-cookie";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -86,62 +86,69 @@ const Page = (props: Props) => {
         }
     };
     return (
-        <div className="flex items-center justify-center min-h-screen">
-            <div className="flex flex-col items-center justify-center w-full max-w-screen-xl p-4 sm:px-6 sm:py-4 lg:px-8 lg:py-4">
-                <AuthPageLogo />
-                <div className="text-center mb-4 text-2xl font-semibold">
-                    Welcome Back!
-                </div>
-                <div className="text-sm mb-1">
-                    <span>Don&apos;t have an account? </span>
-                    <Link
-                        href="/account/signup"
-                        className="hover:underline text-primary"
-                        replace>
-                        Create Account
-                    </Link>
-                </div>
-                <form className="w-full md:max-w-sm" onSubmit={handleSubmit}>
-                    <Input
-                        type="email"
-                        required={true}
-                        id="username"
-                        className="mb-2"
-                        name="username"
-                        placeholder="Email address here"
-                        ref={emailRef}
-                        autoComplete="off"
-                        onChange={(e) => setUser(e.target.value)}
-                        value={user}
-                    />
-                    <Input
-                        type="password"
-                        required={true}
-                        id="password"
-                        className="mb-2"
-                        name="password"
-                        placeholder="**************"
-                        onChange={(e) => setPwd(e.target.value)}
-                        value={pwd}
-                    />
-                    <Button type="submit" className="w-full" disabled={loader}>
-                        {loader ? (
-                            <Loader className="animate-spin" />
-                        ) : (
-                            "Submit"
-                        )}
-                    </Button>
-                    <div className="flex justify-end text-sm">
+        <Suspense fallback={<div>Loading...</div>}>
+            <div className="flex items-center justify-center min-h-screen">
+                <div className="flex flex-col items-center justify-center w-full max-w-screen-xl p-4 sm:px-6 sm:py-4 lg:px-8 lg:py-4">
+                    <AuthPageLogo />
+                    <div className="text-center mb-4 text-2xl font-semibold">
+                        Welcome Back!
+                    </div>
+                    <div className="text-sm mb-1">
+                        <span>Don&apos;t have an account? </span>
                         <Link
-                            href="/account/forgot-password"
+                            href="/account/signup"
                             className="hover:underline text-primary"
                             replace>
-                            Forgot your password?
+                            Create Account
                         </Link>
                     </div>
-                </form>
+                    <form
+                        className="w-full md:max-w-sm"
+                        onSubmit={handleSubmit}>
+                        <Input
+                            type="email"
+                            required={true}
+                            id="username"
+                            className="mb-2"
+                            name="username"
+                            placeholder="Email address here"
+                            ref={emailRef}
+                            autoComplete="off"
+                            onChange={(e) => setUser(e.target.value)}
+                            value={user}
+                        />
+                        <Input
+                            type="password"
+                            required={true}
+                            id="password"
+                            className="mb-2"
+                            name="password"
+                            placeholder="**************"
+                            onChange={(e) => setPwd(e.target.value)}
+                            value={pwd}
+                        />
+                        <Button
+                            type="submit"
+                            className="w-full"
+                            disabled={loader}>
+                            {loader ? (
+                                <Loader className="animate-spin" />
+                            ) : (
+                                "Submit"
+                            )}
+                        </Button>
+                        <div className="flex justify-end text-sm">
+                            <Link
+                                href="/account/forgot-password"
+                                className="hover:underline text-primary"
+                                replace>
+                                Forgot your password?
+                            </Link>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
+        </Suspense>
     );
 };
 
