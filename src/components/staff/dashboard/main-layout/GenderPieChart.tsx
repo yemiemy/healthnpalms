@@ -78,9 +78,6 @@ const GenderPieChart = (props: Props) => {
         ],
     };
     const options = {
-        plugins: {
-            legend: true,
-        },
         responsive: true,
     };
     return (
@@ -101,13 +98,6 @@ const GenderPieChart = (props: Props) => {
                 </div>
             </div>
             <div className="w-full">
-                {/* <Image
-                    src="/patients-pie.png"
-                    alt="patient-chart"
-                    width={329}
-                    height={223}
-                    className="w-full"
-                /> */}
                 <Doughnut data={data} options={options} />
             </div>
         </div>
