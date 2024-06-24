@@ -32,93 +32,68 @@ import { DateRange } from "react-day-picker";
 type Props = {
     token?: string;
     setRefreshAppointments: React.Dispatch<React.SetStateAction<boolean>>;
-    initialSelectedDate?: Date;
-    initialSelectedTimeSlot?: string;
-    initialSelectedDoctor?: string;
-    initialNote?: string;
 };
 
 const defaultTimeSlots = [
     {
         slot: "09:00",
-        value: "08:00",
         isSelected: false,
     },
     {
         slot: "09:30",
-        value: "08:30",
         isSelected: false,
     },
     {
         slot: "10:00",
-        value: "09:00",
         isSelected: false,
     },
     {
         slot: "10:30",
-        value: "09:30",
         isSelected: false,
     },
     {
         slot: "11:00",
-        value: "10:00",
         isSelected: false,
     },
     {
         slot: "11:30",
-        value: "10:30",
         isSelected: false,
     },
     {
         slot: "14:00",
-        value: "13:00",
         isSelected: false,
     },
     {
         slot: "14:30",
-        value: "13:30",
         isSelected: false,
     },
     {
         slot: "15:00",
-        value: "14:00",
         isSelected: false,
     },
     {
         slot: "15:30",
-        value: "14:30",
         isSelected: false,
     },
     {
         slot: "16:00",
-        value: "15:00",
         isSelected: false,
     },
     {
         slot: "16:30",
-        value: "15:30",
         isSelected: false,
     },
     {
         slot: "17:00",
-        value: "16:00",
         isSelected: false,
     },
     {
         slot: "17:30",
-        value: "16:30",
         isSelected: false,
     },
 ];
 
-const AppointmentScheduleModal = ({
-    token,
-    setRefreshAppointments,
-    initialSelectedDate,
-    initialSelectedTimeSlot,
-    initialSelectedDoctor,
-    initialNote,
-}: Props) => {
+const AppointmentScheduleModal = ({ token, setRefreshAppointments }: Props) => {
     const router = useRouter();
     const [availabilities, setAvailabilities] = React.useState<Availability[]>(
         []
@@ -126,18 +101,11 @@ const AppointmentScheduleModal = ({
     const [availableDateRanges, setAvailableDateRanges] = React.useState<
         DateRange[]
     >([]);
-    const [selectedDate, setSelectedDate] = React.useState<Date | undefined>(
-        initialSelectedDate
-    );
+    const [selectedDate, setSelectedDate] = React.useState<Date>();
     const [timeSlots, setTimeSlots] = React.useState(defaultTimeSlots);
-    const [selectedTimeSlot, setSelectedTimeSlot] = React.useState<string>(
-        initialSelectedTimeSlot || ""
-    );
+    const [selectedTimeSlot, setSelectedTimeSlot] = React.useState<string>("");
     const [doctors, setDoctors] = React.useState<MedicalProfessional[]>();
-    const [selectedDoctor, setSelectedDoctor] = React.useState<string>(
-        initialSelectedDoctor || ""
-    );
-    const [note, setNote] = React.useState<string>(initialNote || "");
+    const [selectedDoctor, setSelectedDoctor] = React.useState<string>();
     const [btnLoader, setBtnLoader] = React.useState<boolean>(false);
     const closeModal = React.useRef<HTMLButtonElement>(null);
 
@@ -220,9 +188,7 @@ const AppointmentScheduleModal = ({
     };
 
     const handleTimeSlotSelect = (selectedSlot: string) => {
-        let value = timeSlots.filter((slot) => slot.slot === selectedSlot)[0]
-            .value;
-        setSelectedTimeSlot(value + ":00.000Z");
+        setSelectedTimeSlot(selectedSlot + ":00.000Z");
         setTimeSlots(
             timeSlots.map((slot) =>
                 slot.slot === selectedSlot
@@ -254,7 +220,6 @@ const AppointmentScheduleModal = ({
                     start_time,
                     end_time,
                     medical_professional_id: selectedDoctor,
-                    note,
                 }),
                 {
                     headers: {
@@ -348,12 +313,7 @@ const AppointmentScheduleModal = ({
                                     the appointment.
                                 </small>
                             </Label>
-                            <Textarea
-                                id="name"
-                                onChange={(e) => setNote(e.target.value)}
-                                value={note}
-                                rows={5}
-                            />
+                            <Textarea id="name" rows={5} />
                         </div>
                     </div>
                     <div

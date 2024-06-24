@@ -1,17 +1,17 @@
 import React from "react";
 import DashboardNavBar from "../../layouts/DashboardNavBar";
 import DashboardMainLayout from "./main-layout/DashboardMainLayout";
-import { User } from "@/lib/models/accounts/models";
+import { MedicalProfessional } from "@/lib/models/staff/models";
 
 type Props = {
-    user?: User;
+    doctor?: MedicalProfessional;
 };
 
-const Main = ({ user }: Props) => {
+const Main = ({ doctor }: Props) => {
     return (
         <div className="flex-1 w-full min-h-screen h-screen text-black dark:text-slate-300 overflow-y-auto">
-            <DashboardNavBar user={user} />
-            <DashboardMainLayout user={user} />
+            <DashboardNavBar user={doctor?.user} />
+            <DashboardMainLayout doctor={doctor} />
         </div>
     );
 };

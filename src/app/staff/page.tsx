@@ -5,9 +5,9 @@ import axios from "@/lib/api";
 import { toast } from "sonner";
 import { cookies } from "next/headers";
 
-const getUser = async (token: string) => {
+const getDoctor = async (token: string) => {
     try {
-        const response = await axios.get("/accounts/details/", {
+        const response = await axios.get("/accounts/staff/", {
             headers: {
                 Authorization: `Token ${token}`,
             },
@@ -27,12 +27,12 @@ export default async function Home() {
         return Response.redirect(new URL("/account/login?next=/", "/"));
     }
 
-    const user = await getUser(token);
+    const doctor = await getDoctor(token);
 
     return (
         <div className="flex overflow-hidden">
             <SideBar isDashboardActive={true} />
-            <Main user={user} />
+            <Main doctor={doctor} />
         </div>
     );
 }

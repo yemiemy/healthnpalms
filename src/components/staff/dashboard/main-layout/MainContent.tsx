@@ -1,21 +1,19 @@
 import React from "react";
 import HeroCard from "./HeroCard";
-// import PatientListCard from "./PatientListCard";
 import ReportCard from "./ReportCard";
 import InfoChart from "./InfoChart";
-import { User } from "@/lib/models/accounts/models";
+import { MedicalProfessional } from "@/lib/models/staff/models";
 
 type Props = {
-    user?: User;
+    doctor?: MedicalProfessional;
 };
 
-const MainContent = ({ user }: Props) => {
+const MainContent = ({ doctor }: Props) => {
     return (
         <div className="flex-1 flex flex-col gap-8 w-full">
-            <HeroCard user={user} />
+            <HeroCard doctor={doctor} />
             <ReportCard />
             <InfoChart />
-            {/* <PatientListCard /> */}
         </div>
     );
 };

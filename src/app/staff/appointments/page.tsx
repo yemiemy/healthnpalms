@@ -5,18 +5,19 @@ import SideBar from "@/components/layouts/SideBar";
 import { User } from "@/lib/models/accounts/models";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import axios from "@/lib/api";
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { PlusIcon } from "lucide-react";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import AppointmentScheduleModal from "./components/AppointmentScheduleModal";
 import { DataTable } from "./components/appointments-table/data-table";
-import { Appointment, AppointmentTableModel } from "@/lib/models/shared/models";
+import {
+    Appointment,
+    DoctorAppointmentTableModel,
+} from "@/lib/models/shared/models";
 import { toast } from "sonner";
-import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
+// import { columns } from "./components/appointments-table/columns";
+
+import { ColumnDef } from "@tanstack/react-table";
+import { format } from "date-fns";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -24,19 +25,48 @@ import {
     DropdownMenuLabel,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
 import { MoreHorizontal } from "lucide-react";
-import { ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "./components/appointments-table/DataTableColumnHeader";
-import { format } from "date-fns";
+import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 
 type Props = {};
+
+export const handleAppointmentStatusUpdate = async (
+    appointment: DoctorAppointmentTableModel,
+    status: string
+) => {
+    const token = Cookies.get("__token");
+    try {
+        await axios.put(
+            `/appointments/staff/${appointment.id}/`,
+            JSON.stringify({
+                medical_professional_id: appointment.medical_professional_id,
+                start_time: appointment.start_time,
+                end_time: appointment.end_time,
+                status,
+                is_status_update: true,
+            }),
+            {
+                headers: {
+                    Authorization: `Token ${token}`,
+                },
+            }
+        );
+        toast.success("Appointment updated successfully.");
+    } catch (err: any) {
+        console.log("Error getting user:", err);
+        toast.error("Unable to update your appointment. Please try again.");
+    }
+};
 
 const Page = (props: Props) => {
     const router = useRouter();
     const token = Cookies.get("__token");
     const [user, setUser] = useState<User>();
     const [appointments, setAppointments] = React.useState<
-        AppointmentTableModel[]
+        DoctorAppointmentTableModel[]
     >([]);
     const [refreshAppointments, setRefreshAppointments] =
         React.useState<boolean>(false);
@@ -60,20 +90,20 @@ const Page = (props: Props) => {
 
     const getAppointmentsData = useCallback(async () => {
         try {
-            const response = await axios.get("/appointments/", {
+            const response = await axios.get("/appointments/staff/", {
                 headers: {
                     Authorization: `Token ${token}`,
                 },
             });
             const data = await response.data;
             const results = data.results;
-            let tableModel: AppointmentTableModel[] = [];
+            let tableModel: DoctorAppointmentTableModel[] = [];
             results.forEach((appointment: Appointment) => {
                 tableModel.push({
                     id: appointment.id,
                     medical_professional_id:
                         appointment.medical_professional.id,
-                    doctor: appointment.medical_professional.user.full_name,
+                    patient: appointment.patient.user.full_name,
                     note: appointment.note,
                     status: appointment.status,
                     start_time: appointment.start_time,
@@ -97,49 +127,7 @@ const Page = (props: Props) => {
         getAppointmentsData();
     }, [refreshAppointments, getAppointmentsData]);
 
-    const handleAppointmentStatusUpdate = async (
-        appointment: AppointmentTableModel,
-        status: string
-    ) => {
-        try {
-            await axios.put(
-                `/appointments/${appointment.id}/`,
-                JSON.stringify({
-                    medical_professional_id:
-                        appointment.medical_professional_id,
-                    start_time: appointment.start_time,
-                    end_time: appointment.end_time,
-                    status,
-                    is_status_update: true,
-                }),
-                {
-                    headers: {
-                        Authorization: `Token ${token}`,
-                    },
-                }
-            );
-            toast.success("Appointment updated successfully.");
-        } catch (err: any) {
-            console.log("Error updating appointment:", err);
-            toast.error("Unable to update your appointment. Please try again.");
-        }
-    };
-
-    const handleAppointmentDelete = async (appointment_id: string) => {
-        try {
-            await axios.delete(`/appointments/${appointment_id}/`, {
-                headers: {
-                    Authorization: `Token ${token}`,
-                },
-            });
-            toast.success("Appointment deleted successfully.");
-        } catch (err: any) {
-            console.log("Error deleting appointment:", err);
-            toast.error("Unable to delete your appointment. Please try again.");
-        }
-    };
-
-    const columns: ColumnDef<AppointmentTableModel>[] = [
+    const columns: ColumnDef<DoctorAppointmentTableModel>[] = [
         {
             id: "S/N",
             header: "#",
@@ -148,13 +136,13 @@ const Page = (props: Props) => {
             },
         },
         {
-            accessorKey: "doctor",
+            accessorKey: "patient",
             header: ({ column }) => (
-                <DataTableColumnHeader column={column} title="Doctor" />
+                <DataTableColumnHeader column={column} title="Patient" />
             ),
             cell: ({ row }) => {
                 const appointment = row.original;
-                return <div className="">{appointment.doctor}</div>;
+                return <div className="">{appointment.patient}</div>;
             },
         },
         {
@@ -223,7 +211,6 @@ const Page = (props: Props) => {
                 );
             },
         },
-
         {
             id: "actions",
             enableHiding: false,
@@ -241,7 +228,29 @@ const Page = (props: Props) => {
                         <DropdownMenuContent align="end">
                             <DropdownMenuLabel>Actions</DropdownMenuLabel>
                             <DropdownMenuItem
-                                className="hover:text-destructive cursor-pointer"
+                                className="cursor-pointer"
+                                onClick={async () => {
+                                    await handleAppointmentStatusUpdate(
+                                        appointment,
+                                        "Accepted"
+                                    );
+                                    setRefreshAppointments((prev) => !prev);
+                                }}>
+                                Accept
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                                className="cursor-pointer"
+                                onClick={async () => {
+                                    await handleAppointmentStatusUpdate(
+                                        appointment,
+                                        "Completed"
+                                    );
+                                    setRefreshAppointments((prev) => !prev);
+                                }}>
+                                Complete
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                                className="text-destructive cursor-pointer"
                                 onClick={async () => {
                                     await handleAppointmentStatusUpdate(
                                         appointment,
@@ -250,16 +259,6 @@ const Page = (props: Props) => {
                                     setRefreshAppointments((prev) => !prev);
                                 }}>
                                 Cancel
-                            </DropdownMenuItem>
-                            <DropdownMenuItem
-                                className="text-destructive cursor-pointer hover:text-destructive hover:text-underline"
-                                onClick={async () => {
-                                    await handleAppointmentDelete(
-                                        appointment.id
-                                    );
-                                    setRefreshAppointments((prev) => !prev);
-                                }}>
-                                Delete
                             </DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
@@ -270,7 +269,7 @@ const Page = (props: Props) => {
 
     return (
         <div className="flex overflow-hidden">
-            <SideBar isAppointmentsActive isPatient />
+            <SideBar isAppointmentsActive />
             <main className="flex-1 flex flex-col w-full h-screen max-h-dvh bg-background overflow-auto">
                 <DashboardNavBar user={user} />
                 <div className="p-8 md:p-32 flex md:flex-row flex-col gap-8 w-full">
@@ -285,19 +284,6 @@ const Page = (props: Props) => {
                                     below.
                                 </p>
                             </div>
-                            <Dialog>
-                                <DialogTrigger asChild>
-                                    <Button className="text-base">
-                                        <PlusIcon className="mr-1" /> Book
-                                    </Button>
-                                </DialogTrigger>
-                                <AppointmentScheduleModal
-                                    token={token}
-                                    setRefreshAppointments={
-                                        setRefreshAppointments
-                                    }
-                                />
-                            </Dialog>
                         </div>
 
                         <Card>

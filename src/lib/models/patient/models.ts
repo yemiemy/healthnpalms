@@ -3,7 +3,7 @@ import { MedicalProfessional } from "../staff/models";
 
 export interface Patient {
     id: string;
-    user?: User;
+    user: User;
     allergies: string;
     blood_group: string;
     genotype: string;
@@ -15,6 +15,7 @@ export interface Patient {
     emergency_contact: string;
     preferred_pharmacy: string;
     preferred_language: string;
+    medical_history: MedicalHistory[];
 }
 
 export interface MedicalHistory {
@@ -24,7 +25,8 @@ export interface MedicalHistory {
     allergies: string;
     medications: string;
     immunization_history: string;
-    family_medical_history: number;
+    family_medical_history: string;
+    created_at: string;
 }
 
 export interface VisitHistory {
@@ -41,25 +43,4 @@ export interface VisitHistoryTableModel {
     id: string;
     doctor: string;
     visit_date: string;
-}
-
-export interface Appointment {
-    id: string;
-    patient: Patient;
-    doctor: MedicalProfessional;
-    note?: string;
-    status: string;
-    start_time: string;
-    end_time: string;
-    created_at: string;
-}
-
-export interface AppointmentTableModel {
-    id: string;
-    doctor: string;
-    note?: string;
-    status: string;
-    start_time: string;
-    end_time: string;
-    created_at: string;
 }

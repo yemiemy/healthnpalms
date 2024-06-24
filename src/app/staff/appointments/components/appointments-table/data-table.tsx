@@ -24,7 +24,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { DataTablePagination } from "./DataTablePagination";
 import { DataTableViewOptions } from "./DataTableViewOptions";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
@@ -35,6 +35,7 @@ export function DataTable<TData, TValue>({
     columns,
     data,
 }: DataTableProps<TData, TValue>) {
+    const router = useRouter();
     const [sorting, setSorting] = React.useState<SortingState>([]);
     const [columnFilters, setColumnFilters] =
         React.useState<ColumnFiltersState>([]);
@@ -58,26 +59,30 @@ export function DataTable<TData, TValue>({
         },
     });
 
+    const goToAppointmentDetail = (appointment_id: string) => {
+        router.push(`/staff/appointments/${appointment_id}`);
+    };
+
     return (
-        <div className="p-4">
+        <div className="w-full">
             <div className="flex items-center py-4 gap-2">
                 <Input
-                    placeholder="Filter by name..."
+                    placeholder="Filter by patient's name..."
                     value={
                         (table
-                            .getColumn("full_name")
+                            .getColumn("patient")
                             ?.getFilterValue() as string) ?? ""
                     }
-                    onChange={(event) =>
+                    onChange={(event) => {
                         table
-                            .getColumn("full_name")
-                            ?.setFilterValue(event.target.value)
-                    }
+                            .getColumn("patient")
+                            ?.setFilterValue(event.target.value);
+                    }}
                     className="max-w-sm"
                 />
                 <DataTableViewOptions table={table} />
             </div>
-            <div className="rounded-md border overflow-auto max-h-[700px]">
+            <div className="rounded-md border overflow-auto max-h-[800px]">
                 <Table>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
@@ -105,20 +110,18 @@ export function DataTable<TData, TValue>({
                                     key={row.id}
                                     data-state={
                                         row.getIsSelected() && "selected"
+                                    }
+                                    className="cursor-pointer"
+                                    onClick={(e) =>
+                                        goToAppointmentDetail(row.original.id!)
                                     }>
                                     {row.getVisibleCells().map((cell) => {
-                                        const data = row.original;
                                         return (
                                             <TableCell key={cell.id}>
-                                                <Link
-                                                    // @ts-ignore
-                                                    href={`/staff/patients/${data.patient.id}`}>
-                                                    {flexRender(
-                                                        cell.column.columnDef
-                                                            .cell,
-                                                        cell.getContext()
-                                                    )}
-                                                </Link>
+                                                {flexRender(
+                                                    cell.column.columnDef.cell,
+                                                    cell.getContext()
+                                                )}
                                             </TableCell>
                                         );
                                     })}

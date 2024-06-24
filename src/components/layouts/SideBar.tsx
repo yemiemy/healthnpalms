@@ -6,6 +6,7 @@ import {
     ChevronRightCircleIcon,
     ChevronRightIcon,
     LayoutGridIcon,
+    MessagesSquareIcon,
     SettingsIcon,
     StethoscopeIcon,
     UserIcon,
@@ -18,6 +19,8 @@ type Props = {
     isPatientsActive?: boolean;
     isAppointmentsActive?: boolean;
     isSettingsActive?: boolean;
+    isPatient?: boolean;
+    isChat?: boolean;
 };
 
 const SideBar = (props: Props) => {
@@ -43,7 +46,7 @@ const SideBar = (props: Props) => {
                 </div>
             </div>
             <Link
-                href="/staff"
+                href={props.isPatient ? "/" : "/staff"}
                 className={cn("my-4 px-4 flex justify-center relative", {
                     "bg-white py-2 border-l-2 border-green-500":
                         props.isDashboardActive,
@@ -55,7 +58,7 @@ const SideBar = (props: Props) => {
                 />
             </Link>
             <Link
-                href="/staff/patients"
+                href={props.isPatient ? "/profile" : "/staff/patients"}
                 className={cn("my-4 px-4 flex justify-center relative", {
                     "bg-white py-2 border-l-2 border-green-500":
                         props.isPatientsActive,
@@ -67,7 +70,7 @@ const SideBar = (props: Props) => {
                 />
             </Link>
             <Link
-                href="/"
+                href={props.isPatient ? "/appointments" : "/staff/appointments"}
                 className={cn("my-4 px-4 flex justify-center relative", {
                     "bg-white py-2 border-l-2 border-green-500":
                         props.isAppointmentsActive,
@@ -78,6 +81,20 @@ const SideBar = (props: Props) => {
                     height={15}
                 />
             </Link>
+            {props.isPatient && (
+                <Link
+                    href="/health-assistant"
+                    className={cn("my-4 px-4 flex justify-center relative", {
+                        "bg-white py-2 border-l-2 border-green-500":
+                            props.isChat,
+                    })}>
+                    <MessagesSquareIcon
+                        className="hover:text-green-500 text-slate-500"
+                        width={15}
+                        height={15}
+                    />
+                </Link>
+            )}
             <Link
                 href="/account/settings"
                 className={cn("my-4 px-4 flex justify-center relative", {
@@ -130,7 +147,7 @@ const SideBar = (props: Props) => {
             </Link>
 
             <Link
-                href="/"
+                href={props.isPatient ? "/profile" : "/staff/patients"}
                 className={cn(
                     "my-4 px-4 flex items-center text-sm text-slate-500 hover:text-green-500",
                     {
@@ -143,11 +160,11 @@ const SideBar = (props: Props) => {
                     width={15}
                     height={15}
                 />
-                Patients
+                {props.isPatient ? "Profile" : "Patients"}
             </Link>
 
             <Link
-                href="/"
+                href={props.isPatient ? "/appointments" : "/staff/appointments"}
                 className={cn(
                     "my-4 px-4 flex items-center text-sm text-slate-500 hover:text-green-500",
                     {
@@ -162,6 +179,25 @@ const SideBar = (props: Props) => {
                 />
                 Appointments
             </Link>
+
+            {props.isPatient && (
+                <Link
+                    href="/health-assistant"
+                    className={cn(
+                        "my-4 px-4 flex items-center text-sm text-slate-500 hover:text-green-500",
+                        {
+                            "border-l-2 border-green-500 bg-white py-2":
+                                props.isChat,
+                        }
+                    )}>
+                    <MessagesSquareIcon
+                        className="hover:text-green-500 text-slate-500 mr-1"
+                        width={15}
+                        height={15}
+                    />
+                    Chat
+                </Link>
+            )}
 
             <Link
                 href="/account/settings"

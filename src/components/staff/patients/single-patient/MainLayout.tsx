@@ -1,14 +1,17 @@
 import React from "react";
 import MainContent from "./MainContent";
 import SideContent from "./SideContent";
+import { Patient } from "@/lib/models/patient/models";
 
-type Props = {};
+type Props = {
+    patient: Patient;
+};
 
-const MainLayout = (props: Props) => {
+const MainLayout = ({ patient }: Props) => {
     return (
         <div className="flex flex-col md:flex-row">
-            <MainContent />
-            <SideContent />
+            <MainContent patient={patient} />
+            <SideContent intialPatient={patient} />
         </div>
     );
 };

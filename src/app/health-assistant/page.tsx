@@ -7,7 +7,7 @@ import DashboardNavBar from "@/components/layouts/DashboardNavBar";
 import { User } from "@/lib/models/accounts/models";
 import axios from "@/lib/api";
 import { useRouter } from "next/navigation";
-import PatientSideBar from "@/components/layouts/PatientSideBar";
+import SideBar from "@/components/layouts/SideBar";
 import ChatForm from "./components/ChatForm";
 import ExampleMessages from "./components/ExampleMessages";
 import HeroMessage from "./components/HeroMessage";
@@ -83,7 +83,7 @@ export default function Chat() {
 
     return (
         <div className="flex overflow-hidden">
-            <PatientSideBar isChat isPatient />
+            <SideBar isChat isPatient />
             <div
                 className="flex-1 flex flex-col w-full h-screen max-h-dvh bg-background overflow-auto"
                 ref={chatParent}>

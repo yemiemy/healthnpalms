@@ -1,4 +1,4 @@
-import PatientSideBar from "@/components/layouts/PatientSideBar";
+import SideBar from "@/components/layouts/SideBar";
 import React from "react";
 import axios from "@/lib/api";
 import { toast } from "sonner";
@@ -17,7 +17,6 @@ const getUser = async (token: string) => {
         return response.data;
     } catch (err: any) {
         console.log("Error", err);
-        // toast.error("Couldn't connect with the server");
     }
 };
 
@@ -32,7 +31,10 @@ const Page = async (props: Props) => {
     const user = await getUser(token);
     return (
         <div className="flex overflow-hidden">
-            <PatientSideBar isPatientsActive isPatient />
+            <SideBar
+                isPatientsActive
+                isPatient={!(user.is_staff && user.is_medical_professional)}
+            />
             <Main initialUser={user} token={token} />
         </div>
     );

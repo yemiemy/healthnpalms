@@ -1,17 +1,27 @@
 "use client";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import { EditIcon, HeartPulseIcon } from "lucide-react";
+import { DeleteIcon, EditIcon, HeartPulseIcon, Trash2Icon } from "lucide-react";
 import React from "react";
-import MedicalHistoryEditForm from "./MedicalHistoryEditForm";
+import MedicalHistoryDeleteForm from "./MedicalHistoryDeleteForm";
+import MedicalHistoryForm from "./MedicalHistoryForm";
+import { MedicalHistory, Patient } from "@/lib/models/patient/models";
+import { format } from "date-fns";
 
 type Props = {
-    title: string;
-    date: string;
     bgColor: string;
     addConnector?: boolean;
+    patient: Patient;
+    medical_history: MedicalHistory;
+    setRefreshPatientData: any;
 };
 
-const MedicalHistoryItem = ({ title, date, bgColor, addConnector }: Props) => {
+const MedicalHistoryItem = ({
+    bgColor,
+    addConnector,
+    patient,
+    medical_history,
+    setRefreshPatientData,
+}: Props) => {
     const [showOptions, setShowOptions] = React.useState<boolean>(false);
     return (
         <div
@@ -21,8 +31,7 @@ const MedicalHistoryItem = ({ title, date, bgColor, addConnector }: Props) => {
             }}
             onMouseLeave={(e) => {
                 setShowOptions(false);
-            }}
-            key={Math.random()}>
+            }}>
             <div className="flex gap-2">
                 <div>
                     <div className={"relative rounded-full p-2 " + bgColor}>
@@ -37,21 +46,42 @@ const MedicalHistoryItem = ({ title, date, bgColor, addConnector }: Props) => {
                     </div>
                 </div>
                 <div>
-                    <p>{title}</p>
-                    <p>{date}</p>
+                    <p>{medical_history.medical_conditions}</p>
+                    <p className="text-xs">
+                        {format(medical_history.created_at, "E, LLL dd yyyy")}
+                    </p>
                 </div>
             </div>
             {showOptions && (
-                <Dialog>
-                    <DialogTrigger asChild>
-                        <EditIcon
-                            className="cursor-pointer text-gray-500"
-                            width={16}
-                            height={16}
+                <div className="flex flex-col gap-2">
+                    <Dialog>
+                        <DialogTrigger asChild>
+                            <EditIcon
+                                className="cursor-pointer text-gray-500"
+                                width={16}
+                                height={16}
+                            />
+                        </DialogTrigger>
+                        <MedicalHistoryForm
+                            patient={patient}
+                            medical_history={medical_history}
+                            setRefreshPatientData={setRefreshPatientData}
                         />
-                    </DialogTrigger>
-                    <MedicalHistoryEditForm />
-                </Dialog>
+                    </Dialog>
+                    <Dialog>
+                        <DialogTrigger asChild>
+                            <Trash2Icon
+                                className="cursor-pointer text-destructive"
+                                width={16}
+                                height={16}
+                            />
+                        </DialogTrigger>
+                        <MedicalHistoryDeleteForm
+                            medical_history={medical_history}
+                            setRefreshPatientData={setRefreshPatientData}
+                        />
+                    </Dialog>
+                </div>
             )}
         </div>
     );

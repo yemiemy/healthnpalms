@@ -20,7 +20,6 @@ import { User } from "@/lib/models/accounts/models";
 import { columns } from "./medical-history-table/columns";
 
 async function getData(): Promise<VisitHistoryTableModel[]> {
-    // Fetch data from your API here.
     let data = [];
     for (let i = 0; i < 1000; i++) {
         data.push({

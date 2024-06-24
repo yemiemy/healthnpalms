@@ -30,26 +30,6 @@ const DashboardNavBar = ({ user }: Props) => {
                             />
                         </DropdownMenu>
                     </div>
-                    {/* Mobile view navbar
-                    <ul
-                        className={
-                            open
-                                ? "absolute border p-4 shadow-md rounded-sm bg-white top-6 left-1/2 z-10 min-w-[50%] max-w-[50%] text-wrap break-words transition-all origin-top duration-500 ease-in md:hidden"
-                                : "hidden"
-                        }>
-                        <li className="cursor-pointer font-medium hover:font-semibold">
-                            Notifications
-                        </li>
-                        <li className="cursor-pointer font-medium hover:font-semibold pt-2">
-                            Profile
-                        </li>
-                        <li className="cursor-pointer font-medium hover:font-semibold pt-2 flex gap-1">
-                            <span className="pt-1">
-                                <LogOutIcon width={16} height={16} />
-                            </span>
-                            Sign Out
-                        </li>
-                    </ul> */}
                 </div>
                 <nav className="hidden md:flex md:gap-8 md:ml-auto md:flex-shrink-0 md:max-w-full md:flex-wrap items-center">
                     <BellIcon
