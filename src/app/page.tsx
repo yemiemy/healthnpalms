@@ -1,34 +1,58 @@
+"use client";
 import axios from "@/lib/api";
 import { toast } from "sonner";
-import { cookies } from "next/headers";
 import SideBar from "@/components/layouts/SideBar";
 import Main from "@/components/patients/dashboard/Main";
+import { useCallback, useEffect, useState } from "react";
+import { User } from "@/lib/models/accounts/models";
+import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
-const getUser = async (token: string) => {
-    try {
-        const response = await axios.get("/accounts/details/", {
-            headers: {
-                Authorization: `Token ${token}`,
-            },
-        });
-        return response.data;
-    } catch (err: any) {
-        console.log("Error", err);
-    }
-};
+export default function Home() {
+    const token = Cookies.get("__token");
+    const [isClient, setIsClient] = useState(false);
+    const router = useRouter();
 
-export default async function Home() {
-    const token = cookies().get("__token")?.value;
+    const [user, setUser] = useState<User>();
+
+    const getUser = useCallback(async () => {
+        try {
+            const response = await axios.get("/accounts/details/", {
+                headers: {
+                    Authorization: `Token ${token}`,
+                },
+            });
+            const data = await response.data;
+            setUser(data);
+        } catch (err: any) {
+            console.log("Error", err);
+            toast.error("Unable to fetch data. Please try again");
+        }
+    }, [token]);
+
+    useEffect(() => {
+        getUser();
+    }, [getUser]);
+
+    useEffect(() => {
+        // This code runs only on the client
+        setIsClient(true);
+    }, []);
 
     if (!token || token.length == 0) {
-        return Response.redirect(new URL("/account/login?next=/", "/"));
+        if (isClient) {
+            toast.error("Please login to continue.");
+            router.replace("/account/login?next=/staff/patients/");
+        }
+        return <></>;
     }
 
-    const user = await getUser(token);
     return (
-        <div className="flex overflow-hidden">
-            <SideBar isDashboardActive isPatient />
-            <Main user={user} />
-        </div>
+        user && (
+            <div className="flex overflow-hidden">
+                <SideBar isDashboardActive isPatient />
+                <Main user={user} />
+            </div>
+        )
     );
 }

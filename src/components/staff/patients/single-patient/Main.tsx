@@ -1,3 +1,4 @@
+"use client";
 import DashboardNavBar from "@/components/layouts/DashboardNavBar";
 import React from "react";
 import MainLayout from "./MainLayout";

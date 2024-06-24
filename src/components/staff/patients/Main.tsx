@@ -1,6 +1,6 @@
+"use client";
 import React from "react";
 import DashboardNavBar from "../../layouts/DashboardNavBar";
-import { User } from "@/lib/models/accounts/models";
 import MainLayout from "./main-layout/MainLayout";
 import { MedicalProfessional } from "@/lib/models/staff/models";
 

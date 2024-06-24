@@ -1,10 +1,9 @@
+"use client";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import {
     ActivitySquareIcon,
-    Dna,
     DnaIcon,
     Ruler,
-    Syringe,
     SyringeIcon,
     WeightIcon,
 } from "lucide-react";
