@@ -107,7 +107,9 @@ const PatientChart = (props: Props) => {
     };
     const options = {
         plugins: {
-            legend: true,
+            legend: {
+                display: true,
+            },
         },
         responsive: true,
         scales: {
@@ -115,7 +117,7 @@ const PatientChart = (props: Props) => {
                 ticks: {
                     font: {
                         size: 12,
-                        weight: "700",
+                        weight: "bold" as "bold", // This should be one of the valid string values
                     },
                 },
                 title: {
@@ -135,7 +137,7 @@ const PatientChart = (props: Props) => {
                 ticks: {
                     font: {
                         size: 12,
-                        weight: "700",
+                        weight: "bold" as "bold", // This should be one of the valid string values
                     },
                 },
                 title: {
@@ -172,13 +174,6 @@ const PatientChart = (props: Props) => {
                 </div>
             </div>
             <div className="w-full">
-                {/* <Image
-                    src="/patients-chart.png"
-                    alt="patient-chart"
-                    width={460}
-                    height={222}
-                    className="w-full"
-                /> */}
                 <div className="">
                     <Line data={data} options={options}></Line>
                 </div>
