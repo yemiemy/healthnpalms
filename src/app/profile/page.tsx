@@ -12,8 +12,8 @@ type Props = {};
 
 const Page = (props: Props) => {
     const token = Cookies.get("__token");
+    const [isClient, setIsClient] = useState(false);
     const router = useRouter();
-    // const [isClient]
 
     const [user, setUser] = useState<User>();
 
@@ -36,8 +36,17 @@ const Page = (props: Props) => {
         getUser();
     }, [getUser]);
 
+    React.useEffect(() => {
+        // This code runs only on the client
+        setIsClient(true);
+    }, []);
+
     if (!token || token.length == 0) {
-        router.replace("/account/login?next=/profile");
+        if (isClient) {
+            toast.error("Please login to continue.");
+            router.replace("/account/login?next=/staff/patients/");
+        }
+        return <></>;
     }
 
     return (
