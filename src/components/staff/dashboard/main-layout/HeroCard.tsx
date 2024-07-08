@@ -20,11 +20,11 @@ const HeroCard = ({ doctor }: Props) => {
                         {doctor?.education_and_qualifications}
                     </h4>
                 </div>
-                <div className="mt-8 text-base xl:text-xl">
+                {/* <div className="mt-8 text-base xl:text-xl">
                     You have a total of{" "}
                     <span className="text-yellow-400">12 appointments</span>{" "}
                     today!
-                </div>
+                </div> */}
             </div>
             <Image
                 src="/female-doctor-with-stethoscope-bg.png"

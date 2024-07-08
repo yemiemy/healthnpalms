@@ -16,12 +16,6 @@ const HeroCard = ({ user }: Props) => {
                         {user?.first_name + " " + user?.last_name}
                     </h1>
                 </div>
-                <div className="mt-8 text-base xl:text-xl">
-                    You have a total of{" "}
-                    <span className="text-yellow-400">
-                        12 upcoming appointments!
-                    </span>
-                </div>
             </div>
         </div>
     );

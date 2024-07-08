@@ -9,7 +9,7 @@ const SideContent = (props: Props) => {
             {/* <CalendarCard /> */}
             <div className="w-full">
                 <h1 className="mb-2">Your upcoming appointments</h1>
-                <UpcomingAppointmentsCard />
+                <UpcomingAppointmentsCard isPatient />
             </div>
         </div>
     );

@@ -37,15 +37,15 @@ const MainLayout = (props: Props) => {
                     <div className="grid gap-6">
                         <Card x-chunk="dashboard-04-chunk-1">
                             <CardHeader>
-                                <CardTitle>Store Name</CardTitle>
+                                <CardTitle>Security</CardTitle>
                                 <CardDescription>
-                                    Used to identify your store in the
-                                    marketplace.
+                                    You can update your security options using
+                                    the options below.
                                 </CardDescription>
                             </CardHeader>
                             <CardContent>
                                 <form>
-                                    <Input placeholder="Store Name" />
+                                    <Input placeholder="Security" />
                                 </form>
                             </CardContent>
                             <CardFooter className="border-t px-6 py-4">

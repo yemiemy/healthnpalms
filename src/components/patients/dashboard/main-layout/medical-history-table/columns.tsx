@@ -51,45 +51,15 @@ export const columns: ColumnDef<VisitHistoryTableModel>[] = [
         ),
         cell: ({ row }) => {
             const visit_history = row.original;
-            const date = new Date(visit_history.visit_date);
+            const date = visit_history.visit_date
+                ? new Date(visit_history.visit_date).toDateString()
+                : "";
             return (
                 <Link
                     // @ts-ignore
                     href={`/visit-history/${visit_history.id}`}>
-                    <div className="">{date.toDateString()}</div>
+                    <div className="">{date}</div>
                 </Link>
-            );
-        },
-    },
-    {
-        id: "actions",
-        cell: ({ row }) => {
-            const visit_history = row.original;
-
-            return (
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" className="h-8 w-8 p-0">
-                            <span className="sr-only">Open menu</span>
-                            <MoreVerticalIcon className="h-4 w-4" />
-                        </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem
-                            onClick={() =>
-                                navigator.clipboard.writeText(visit_history.id)
-                            }>
-                            Copy patient ID
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem>
-                            <Link href={`/visit-history/${visit_history.id}`}>
-                                View patient details
-                            </Link>
-                        </DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
             );
         },
     },

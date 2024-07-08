@@ -31,19 +31,31 @@ export function AvatarDropdownMenu({ mobile, staff }: Props) {
                 <>
                     <DropdownMenuGroup>
                         <DropdownMenuItem>
-                            <LayoutGridIcon className="mr-2 h-4 w-4" />
-                            <span>Dashboard</span>
+                            <Link href="/" className="flex">
+                                <LayoutGridIcon className="mr-2 h-4 w-4" />
+                                <span>Dashboard</span>
+                            </Link>
                         </DropdownMenuItem>
                         {staff && (
                             <DropdownMenuItem>
-                                <Users className="mr-2 h-4 w-4" />
-                                <span>Patients</span>
+                                <Link href="/staff/patients" className="flex">
+                                    <Users className="mr-2 h-4 w-4" />
+                                    <span>Patients</span>
+                                </Link>
                             </DropdownMenuItem>
                         )}
 
                         <DropdownMenuItem>
-                            <CalendarDaysIcon className="mr-2 h-4 w-4" />
-                            <span>Appointments</span>
+                            <Link
+                                href={`${
+                                    staff
+                                        ? "/staff/appointments/"
+                                        : "/appointments/"
+                                }`}
+                                className="flex">
+                                <CalendarDaysIcon className="mr-2 h-4 w-4" />
+                                <span>Appointments</span>
+                            </Link>
                         </DropdownMenuItem>
                     </DropdownMenuGroup>
                     <DropdownMenuSeparator />

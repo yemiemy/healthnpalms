@@ -1,14 +1,17 @@
 import { ChevronRightCircleIcon, ChevronRightIcon } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 type Props = {
     bgColor: string;
     avatar: string;
     name: string;
+    timeSlot: string;
+    url?: string;
 };
 
-const Appointment2 = ({ bgColor, avatar, name }: Props) => {
+const Appointment2 = ({ bgColor, avatar, name, timeSlot, url }: Props) => {
     return (
         <div
             className={
@@ -24,11 +27,13 @@ const Appointment2 = ({ bgColor, avatar, name }: Props) => {
             />
             <div>
                 <h1 className="text-sm font-semibold">{name}</h1>
-                <p className="text-xs font-light">10:00 am - 11:00 am</p>
+                <p className="text-xs font-light">{timeSlot}</p>
             </div>
-            <div className="ms-auto">
-                <ChevronRightIcon className="bg-white p-1 rounded-full text-slate-500" />
-            </div>
+            {url && (
+                <Link href={url} className="ms-auto">
+                    <ChevronRightIcon className="bg-white p-1 rounded-full text-slate-500" />
+                </Link>
+            )}
         </div>
     );
 };

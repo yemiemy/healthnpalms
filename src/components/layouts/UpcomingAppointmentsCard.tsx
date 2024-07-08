@@ -1,54 +1,106 @@
+"use client";
 import Link from "next/link";
-import React from "react";
-import Appointment from "../staff/dashboard/main-layout/side-content/Appointment";
+import React, { useCallback, useEffect, useState } from "react";
 import Appointment2 from "../staff/dashboard/main-layout/side-content/Appointment2";
 import { Button } from "@/components/ui/button";
 import { ArrowBigRight, ArrowRight, MoveRightIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
+import axios from "@/lib/api";
+import Cookies from "js-cookie";
+import { Appointment } from "@/lib/models/shared/models";
+import { toast } from "sonner";
+import { format } from "date-fns";
 
-type Props = {};
+type Props = {
+    isPatient?: boolean;
+};
 
-const UpcomingAppointmentsCard = (props: Props) => {
+const bgColors: string[] = [
+    "bg-blue-100",
+    "bg-yellow-100",
+    "bg-red-100",
+    "bg-green-100",
+];
+const UpcomingAppointmentsCard = ({ isPatient }: Props) => {
+    const router = useRouter();
+    const token = Cookies.get("__token");
+    const [appointments, setAppointments] = useState<Appointment[]>([]);
+
+    const getAppointmentsData = useCallback(async () => {
+        try {
+            const url = isPatient ? "/appointments/" : "/appointments/staff/";
+            const response = await axios.get(url, {
+                headers: {
+                    Authorization: `Token ${token}`,
+                },
+            });
+            const data = await response.data;
+            const results = data.results
+                .filter((appointment: Appointment) =>
+                    ["Pending", "Accepted"].includes(appointment.status)
+                )
+                .slice(0, 5);
+            setAppointments(results);
+        } catch (err: any) {
+            console.log("Error getting user:", err);
+            toast.error("Unable to fetch your appointments. Please try again.");
+        }
+    }, [token, isPatient]);
+
+    useEffect(() => {
+        getAppointmentsData();
+    }, [getAppointmentsData]);
+
     return (
         <div className="w-full">
-            {/* <div className="flex text-black mb-1 w-full gap-1 items-center">
-                <h1 className="text-sm">Upcoming appointments</h1>
-                <Link
-                    href="/"
-                    className="ms-auto text-blue-500 text-xs hover:underline">
-                    View all
-                </Link>
-            </div> */}
+            {appointments.length > 0 ? (
+                <>
+                    {appointments.map((appointment, index) => (
+                        <Appointment2
+                            key={appointment.id}
+                            name={
+                                isPatient
+                                    ? appointment.medical_professional.user
+                                          .full_name
+                                    : appointment.patient.user.full_name
+                            }
+                            avatar={
+                                isPatient
+                                    ? appointment.medical_professional.user
+                                          .avatar
+                                    : appointment.patient.user.avatar
+                            }
+                            bgColor={bgColors[index % bgColors.length]}
+                            timeSlot={format(appointment.start_time, "PPPp")}
+                            url={
+                                isPatient
+                                    ? ""
+                                    : `/staff/appointments/${appointment.id}`
+                            }
+                        />
+                    ))}
 
-            {/* <Appointment />
-            <Appointment /> */}
-
-            <Appointment2
-                name="Dele Akin"
-                avatar="/avatar-1.jpg"
-                bgColor="bg-blue-100"
-            />
-            <Appointment2
-                name="Ngozi Afang"
-                avatar="/avatar-2.jpg"
-                bgColor="bg-yellow-100"
-            />
-            <Appointment2
-                name="Onusi Sultan"
-                avatar="/avatar-4.jpeg"
-                bgColor="bg-red-100"
-            />
-            <Appointment2
-                name="Yosi Osibs"
-                avatar="/avatar-3.jpeg"
-                bgColor="bg-green-100"
-            />
-
-            <Button
-                className="w-full bg-slate-200 text-purple-500"
-                variant="secondary">
-                View All Appointments{" "}
-                <MoveRightIcon className="ml-1" width={15} height={15} />
-            </Button>
+                    <Button
+                        className="w-full bg-slate-200 text-purple-500"
+                        variant="secondary"
+                        onClick={() =>
+                            router.push(
+                                isPatient
+                                    ? "/appointments"
+                                    : "/staff/appointments"
+                            )
+                        }>
+                        View All Appointments{" "}
+                        <MoveRightIcon
+                            className="ml-1"
+                            width={15}
+                            height={15}
+                        />
+                    </Button>
+                </>
+            ) : (
+                <div className="">No upcoming appointments.</div>
+            )}
         </div>
     );
 };

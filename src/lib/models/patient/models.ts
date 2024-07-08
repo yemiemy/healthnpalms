@@ -1,4 +1,5 @@
 import { User } from "../accounts/models";
+import { Appointment } from "../shared/models";
 import { MedicalProfessional } from "../staff/models";
 
 export interface Patient {
@@ -31,6 +32,7 @@ export interface MedicalHistory {
 
 export interface VisitHistory {
     id: string;
+    appointment: Appointment;
     patient: Patient;
     medical_professional: MedicalProfessional;
     visit_date: string;
